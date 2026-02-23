@@ -132,16 +132,22 @@ function App() {
 	}, [connection]);
 
 	return (
-		<div className="app-shell">
-			<header className="toolbar">
-				<h1>JSON Log Viewer</h1>
-				<div className="toolbar-actions">
-					<span className={`connection connection-${connection}`}>
+		<div className="flex h-full flex-col bg-[#0b1220] font-mono text-slate-200">
+			<header className="flex items-center justify-between gap-3 border-b border-slate-800 bg-gray-900 px-4 py-3">
+				<h1 className="m-0 text-base">JSON Log Viewer</h1>
+				<div className="flex items-center gap-2">
+					<span
+						className={`rounded-full px-2 py-1 text-xs font-bold uppercase tracking-[0.03em] ${
+							connection === "connected"
+								? "bg-[#052e1a] text-green-300"
+								: "bg-[#3f1d02] text-orange-300"
+						}`}
+					>
 						{statusLabel}
 					</span>
 					<button
 						type="button"
-						className="tail-toggle"
+						className="cursor-pointer rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1.5 text-slate-200 hover:bg-slate-800"
 						onClick={() => {
 							setTailEnabled((enabled) => !enabled);
 						}}
@@ -151,16 +157,29 @@ function App() {
 				</div>
 			</header>
 
-			<main className="log-list">
+			<main className="flex-1 overflow-auto px-4 py-3">
 				{logs.map((event) => {
 					const timestamp = new Date(event.timestamp).toLocaleTimeString();
 					return (
-						<article key={event.seq} className="log-line">
-							<span className="meta">{event.seq}</span>
-							<span className="meta">{timestamp}</span>
-							<span className="meta">{event.source}</span>
-							<span className="meta">{event.stream}</span>
-							<code>{event.line || "\u00a0"}</code>
+						<article
+							key={event.seq}
+							className="grid grid-cols-[auto_auto_1fr] items-baseline gap-2.5 py-0.5 text-[13px] leading-[1.45] lg:grid-cols-[auto_auto_auto_auto_1fr]"
+						>
+							<span className="whitespace-nowrap text-slate-400">
+								{event.seq}
+							</span>
+							<span className="whitespace-nowrap text-slate-400">
+								{timestamp}
+							</span>
+							<span className="hidden whitespace-nowrap text-slate-400 lg:inline">
+								{event.source}
+							</span>
+							<span className="hidden whitespace-nowrap text-slate-400 lg:inline">
+								{event.stream}
+							</span>
+							<code className="break-words whitespace-pre-wrap text-slate-50">
+								{event.line || "\u00a0"}
+							</code>
 						</article>
 					);
 				})}
