@@ -6,6 +6,14 @@ export default defineConfig({
 	plugins: [react()],
 	root: "src/client",
 	publicDir: "../../public",
+	server: {
+		proxy: {
+			"/api": {
+				target: "http://127.0.0.1:3030",
+				changeOrigin: true,
+			},
+		},
+	},
 	build: {
 		outDir: "../../dist/client",
 		emptyOutDir: true,
