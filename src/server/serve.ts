@@ -5,7 +5,6 @@ import { serve as serveHono } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { sValidator } from "@hono/standard-validator";
 import { Hono } from "hono";
-import { logger } from "hono/logger";
 import { streamSSE } from "hono/streaming";
 import * as v from "valibot";
 import { InMemoryLogStore, type LogEvent } from "./log-store.js";
@@ -42,9 +41,9 @@ export function serve(options: ServeOptions = {}) {
 	const host = options.host ?? "127.0.0.1";
 	const port = options.port ?? 3030;
 
-	const isProduction = process.env.NODE_ENV === "production";
-
-	app.use(logger());
+	const isProduction =
+		process.env.NODE_ENV === "production" ||
+		process.env.NODE_ENV !== "development";
 
 	app.get("/api/health", (c) => {
 		return c.json({ status: "ok" });
