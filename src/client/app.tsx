@@ -6,7 +6,7 @@ function App() {
 	const { logs, connection } = useLogEvents();
 
 	return (
-		<div className="flex h-full flex-col bg-[#0b1220] font-mono text-slate-200">
+		<div className="flex h-full flex-col bg-zinc-900 font-mono text-zinc-200">
 			<LogViewerHeader connection={connection} />
 			<LogList logs={logs} />
 		</div>
