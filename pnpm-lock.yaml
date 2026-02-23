@@ -17,6 +17,9 @@ importers:
       commander:
         specifier: ^14.0.3
         version: 14.0.3
+      eventsource-client:
+        specifier: ^1.2.0
+        version: 1.2.0
       hono:
         specifier: ^4.12.2
         version: 4.12.2
@@ -816,6 +819,14 @@ packages:
   escape-string-regexp@1.0.5:
     resolution: {integrity: sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==}
     engines: {node: '>=0.8.0'}
+
+  eventsource-client@1.2.0:
+    resolution: {integrity: sha512-kDI75RSzO3TwyG/K9w1ap8XwqSPcwi6jaMkNulfVeZmSeUM49U8kUzk1s+vKNt0tGrXgK47i+620Yasn1ccFiw==}
+    engines: {node: '>=18.0.0'}
+
+  eventsource-parser@3.0.6:
+    resolution: {integrity: sha512-Vo1ab+QXPzZ4tCa8SwIHJFaSzy4R6SHf7BY79rFBDf0idraZWAkYrDjDj8uWaSm3S2TK+hJ7/t1CEmZ7jXw+pg==}
+    engines: {node: '>=18.0.0'}
 
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
@@ -2212,6 +2223,12 @@ snapshots:
   escalade@3.2.0: {}
 
   escape-string-regexp@1.0.5: {}
+
+  eventsource-client@1.2.0:
+    dependencies:
+      eventsource-parser: 3.0.6
+
+  eventsource-parser@3.0.6: {}
 
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:

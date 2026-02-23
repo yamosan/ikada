@@ -71,23 +71,17 @@ export function serve(options: ServeOptions = {}) {
 		},
 	);
 
-	app.get(
+	app.post(
 		"/api/events",
 		sValidator(
-			"query",
+			"json",
 			v.object({
-				sinceSeq: v.optional(
-					v.pipe(
-						v.string(),
-						v.regex(/^\d+$/),
-						v.transform((value) => Number(value)),
-					),
-				),
+				sinceSeq: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0))),
 			}),
 		),
 		(c) => {
-			const query = c.req.valid("query");
-			const snapshot = logStore.snapshot(query.sinceSeq);
+			const payload = c.req.valid("json");
+			const snapshot = logStore.snapshot(payload.sinceSeq);
 			return streamSSE(c, async (stream) => {
 				let unsubscribe = (): void => {};
 				let finished = false;
