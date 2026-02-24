@@ -7,3 +7,39 @@
 		height: 100%;
 	}
 }
+
+@keyframes accordion-slide-down {
+	from {
+		height: 0;
+		opacity: 0;
+	}
+	to {
+		height: var(--height);
+		opacity: 1;
+	}
+}
+
+@keyframes accordion-slide-up {
+	from {
+		height: var(--height);
+		opacity: 1;
+	}
+	to {
+		height: 0;
+		opacity: 0;
+	}
+}
+
+@layer components {
+	.accordion-content-motion {
+		overflow: hidden;
+	}
+
+	.accordion-content-motion[data-state="open"] {
+		animation: accordion-slide-down 180ms ease-out;
+	}
+
+	.accordion-content-motion[data-state="closed"] {
+		animation: accordion-slide-up 140ms ease-in;
+	}
+}
