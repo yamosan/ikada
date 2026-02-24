@@ -1,10 +1,10 @@
 {
-	"name": "json-log-viewer",
+	"name": "nenrin",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"bin": {
-		"json-log-viewer": "./dist/cli/index.js"
+		"nenrin": "./dist/cli/index.js"
 	},
 	"scripts": {
 		"dev:app": "vite",

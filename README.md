@@ -1,6 +1,6 @@
-# json-log-viewer
+# nenrin
 
-`json-log-viewer` is a local log viewer that ingests line-based logs from `stdin` and streams them to a browser UI using SSE.
+`nenrin` is a local log viewer that ingests line-based logs from `stdin` and streams them to a browser UI using SSE.
 
 ## Requirements
 

@@ -1,4 +1,4 @@
-const PREFIX = "[json-log-viewer]";
+const PREFIX = "[nenrin]";
 
 export const logger = {
 	info: (...args: unknown[]) => console.log(PREFIX, ...args),

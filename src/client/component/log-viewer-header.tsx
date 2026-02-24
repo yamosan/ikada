@@ -7,7 +7,7 @@ type LogViewerHeaderProps = {
 export function LogViewerHeader({ connection }: LogViewerHeaderProps) {
 	return (
 		<header className="flex items-center justify-between gap-3 border-b border-zinc-700 bg-zinc-800 px-4 py-3">
-			<h1 className="m-0 text-base">JSON Log Viewer</h1>
+			<h1 className="m-0 text-base">Nenrin</h1>
 			<div className="flex items-center gap-2">
 				<span
 					className={`rounded-full px-2 py-1 text-xs font-bold uppercase tracking-[0.03em] ${

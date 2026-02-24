@@ -52,7 +52,7 @@ function startServerWithBrowser(
 
 const program = new Command();
 program
-	.name("json-log-viewer")
+	.name("nenrin")
 	.description("Local JSON log viewer")
 	.option("--host <host>", "Host to listen on", "127.0.0.1")
 	.option("--port <number>", "Port to listen on", "3030")
@@ -91,7 +91,7 @@ program
 		const hasPipedInput = !process.stdin.isTTY;
 		if (!hasPipedInput) {
 			command.error(
-				"No piped input detected. Usage: cat logs.json | json-log-viewer ingest",
+				"No piped input detected. Usage: cat logs.json | nenrin ingest",
 			);
 		}
 		const runtime = resolveRuntimeOptions(command);
