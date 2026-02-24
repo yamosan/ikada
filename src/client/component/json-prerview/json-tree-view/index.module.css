@@ -1,6 +1,11 @@
 .root {
 	width: 100%;
 	color: rgb(226 232 240);
+	--tree-indent-step: 1.25rem;
+	--tree-indent-base: 0.5rem;
+	--tree-guide-base: 0.75rem;
+	--tree-item-offset: 1.25rem;
+	--tree-nested-offset: 1rem;
 	font-family:
 		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
 		"Courier New", monospace;
@@ -10,26 +15,29 @@
 	position: relative;
 }
 
+.root :global([data-part="branch-content"] > [data-part="branch"]),
+.root :global([data-part="branch-content"] > [data-part="item"]) {
+	margin-inline-start: var(--tree-nested-offset);
+}
+
 .root :global([data-part="branch-indent-guide"]) {
 	height: 100%;
 	width: 1px;
 	background: rgb(82 82 91 / 0.65);
 	position: absolute;
-	inset-inline-start: calc((var(--depth) - 1) * 1rem + 0.5rem);
-}
-
-.root :global([data-part="branch-indent-guide"][data-depth="1"]) {
-	inset-inline-start: 0.75rem;
+	inset-inline-start: calc(
+		(var(--depth) - 1) * var(--tree-indent-step) + var(--tree-guide-base)
+	);
 }
 
 .root :global([data-part="branch-control"]) {
 	display: flex;
-	padding-inline-start: calc((var(--depth) - 1) * 1rem);
+	padding-inline-start: calc((var(--depth) - 1) * var(--tree-indent-step));
 	user-select: none;
 }
 
 .root :global([data-part="branch-control"][data-depth="1"]) {
-	padding-inline-start: 0.25rem;
+	padding-inline-start: 0.5rem;
 }
 
 .root :global([data-part="branch-control"]:hover) {
@@ -52,11 +60,15 @@
 .root :global([data-part="item"]) {
 	display: flex;
 	position: relative;
-	padding-inline-start: calc(((var(--depth) - 1) * 1rem) + 1.25rem);
+	padding-inline-start: calc(
+		((var(--depth) - 1) * var(--tree-indent-step)) + var(--tree-item-offset)
+	);
 }
 
 .root :global([data-part="item"][data-depth="1"]) {
-	padding-inline-start: 1.5rem;
+	padding-inline-start: calc(
+		var(--tree-indent-base) + var(--tree-item-offset)
+	);
 }
 
 .root :global([data-part="item"]:hover) {
@@ -67,6 +79,19 @@
 .root :global([data-part="branch-text"]) {
 	display: flex;
 	align-items: baseline;
+}
+
+.branchClosing {
+	display: flex;
+	padding-inline-start: calc(
+		((var(--depth) - 1) * var(--tree-indent-step)) + var(--tree-item-offset)
+	);
+}
+
+.branchClosing[data-depth="1"] {
+	padding-inline-start: calc(
+		var(--tree-indent-base) + var(--tree-item-offset)
+	);
 }
 
 .tree {
