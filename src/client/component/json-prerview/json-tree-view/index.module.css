@@ -3,7 +3,7 @@
 	color: rgb(226 232 240);
 	--tree-indent-step: 1.25rem;
 	--tree-indent-base: 0.5rem;
-	--tree-guide-base: 0.75rem;
+	--tree-guide-base: 0.5rem;
 	--tree-item-offset: 1.25rem;
 	--tree-nested-offset: 1rem;
 	font-family:
@@ -26,8 +26,14 @@
 	background: rgb(82 82 91 / 0.65);
 	position: absolute;
 	inset-inline-start: calc(
-		(var(--depth) - 1) * var(--tree-indent-step) + var(--tree-guide-base)
+		(var(--depth) - 1) *
+		var(--tree-indent-step) +
+		var(--tree-guide-base)
 	);
+}
+
+.root :global([data-part="branch-indent-guide"][data-depth="1"]) {
+	inset-inline-start: 0.75rem;
 }
 
 .root :global([data-part="branch-control"]) {
@@ -37,7 +43,7 @@
 }
 
 .root :global([data-part="branch-control"][data-depth="1"]) {
-	padding-inline-start: 0.5rem;
+	padding-inline-start: 0.25rem;
 }
 
 .root :global([data-part="branch-control"]:hover) {
@@ -58,17 +64,17 @@
 }
 
 .root :global([data-part="item"]) {
+	width: max-content;
 	display: flex;
 	position: relative;
 	padding-inline-start: calc(
-		((var(--depth) - 1) * var(--tree-indent-step)) + var(--tree-item-offset)
+		((var(--depth) - 1) * var(--tree-indent-step)) +
+		var(--tree-item-offset)
 	);
 }
 
 .root :global([data-part="item"][data-depth="1"]) {
-	padding-inline-start: calc(
-		var(--tree-indent-base) + var(--tree-item-offset)
-	);
+	padding-inline-start: calc(var(--tree-indent-base) + var(--tree-item-offset));
 }
 
 .root :global([data-part="item"]:hover) {
@@ -84,14 +90,13 @@
 .branchClosing {
 	display: flex;
 	padding-inline-start: calc(
-		((var(--depth) - 1) * var(--tree-indent-step)) + var(--tree-item-offset)
+		((var(--depth) - 1) * var(--tree-indent-step)) +
+		var(--tree-item-offset)
 	);
 }
 
 .branchClosing[data-depth="1"] {
-	padding-inline-start: calc(
-		var(--tree-indent-base) + var(--tree-item-offset)
-	);
+	padding-inline-start: calc(var(--tree-indent-base) + var(--tree-item-offset));
 }
 
 .tree {

@@ -18,7 +18,9 @@ export function JsonPreview({ data }: JsonPreviewProps) {
 				<CopyButton data={data} />
 				<ExpandCollapseButton />
 			</Toolbar>
-			<JsonTreeViewStyled.Tree />
+			<div className="overflow-x-auto">
+				<JsonTreeViewStyled.Tree />
+			</div>
 		</JsonTreeViewStyled.Root>
 	);
 }

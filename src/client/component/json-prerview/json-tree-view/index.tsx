@@ -116,7 +116,9 @@ function JsonTreeNode(props: JsonTreeNodeProps) {
 								{arrow}
 							</TreeView.BranchIndicator>
 						) : null}
-						<TreeView.BranchText {...SCOPE_PROPS}>{lineContent}</TreeView.BranchText>
+						<TreeView.BranchText {...SCOPE_PROPS}>
+							{lineContent}
+						</TreeView.BranchText>
 					</TreeView.BranchControl>
 					<TreeView.BranchContent {...SCOPE_PROPS}>
 						{typeof indentGuide === "boolean" ? (
@@ -126,16 +128,16 @@ function JsonTreeNode(props: JsonTreeNodeProps) {
 						) : (
 							indentGuide
 						)}
-							{visibleChildren.map((child, index) => (
-								<JsonTreeNode
-									key={child.keyPath.join(".")}
-									node={child}
-									indexPath={[...indexPath, index]}
-									arrow={arrow}
-									indentGuide={indentGuide}
-									renderValue={renderValue}
-								/>
-							))}
+						{visibleChildren.map((child, index) => (
+							<JsonTreeNode
+								key={child.keyPath.join(".")}
+								node={child}
+								indexPath={[...indexPath, index]}
+								arrow={arrow}
+								indentGuide={indentGuide}
+								renderValue={renderValue}
+							/>
+						))}
 						{nodeState.expanded && isContainer ? (
 							<div
 								className={styles.branchClosing}
@@ -211,7 +213,10 @@ function isContainerNode(node: JsonLikeNode) {
 	return node.type === "array" || node.type === "object";
 }
 
-function getVisibleChildren(children: JsonLikeNode[] | undefined, parentType: string) {
+function getVisibleChildren(
+	children: JsonLikeNode[] | undefined,
+	parentType: string,
+) {
 	return (children ?? []).filter((child) => !shouldHideNode(child, parentType));
 }
 

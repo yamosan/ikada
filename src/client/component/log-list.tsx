@@ -1,17 +1,29 @@
-import { Accordion } from "@ark-ui/react";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { ChevronRight } from "lucide-react";
-import { memo, useRef } from "react";
+import { ArrowDown, PanelRightClose } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { LogEvent } from "../hook/use-log-events";
 import { ContentPanel } from "./content-panel";
 import { ContentPanelJson } from "./content-panel-json";
+import { SidePanel } from "./side-panel";
 
 type LogListProps = {
 	logs: LogEvent[];
 };
 
 const LOG_ROW_GRID_CLASS =
-	"grid-cols-[2rem_fit-content(3rem)_10.5rem_fit-content(6rem)_minmax(0,1fr)]";
+	"grid-cols-[3.5rem_10.5rem_fit-content(6rem)_minmax(0,1fr)]";
+const ROW_HEIGHT_PX = 32;
+const BOTTOM_THRESHOLD_PX = 4;
+const LIST_PANEL_MIN_SIZE = 35;
+const DETAIL_PANEL_MIN_SIZE = 20;
+
+function formatTimestamp(timestamp: number): string {
+	return new Date(timestamp)
+		.toISOString()
+		.replace("T", " ")
+		.replace("Z", "")
+		.slice(0, 23);
+}
 
 function parseJsonLine(line: string): unknown | null {
 	try {
@@ -22,122 +34,213 @@ function parseJsonLine(line: string): unknown | null {
 }
 
 export function LogList({ logs }: LogListProps) {
-	const parentRef = useRef<HTMLElement>(null);
+	const scrollRef = useRef<HTMLDivElement>(null);
+	const [isAtBottom, setIsAtBottom] = useState(true);
+	const isAtBottomRef = useRef(true);
+	const prevLogCountRef = useRef(logs.length);
+	const [selectedEvent, setSelectedEvent] = useState<LogEvent | null>(null);
+
+	const syncAtBottomState = useCallback(() => {
+		const scrollElement = scrollRef.current;
+		if (!scrollElement) {
+			return;
+		}
+		const distanceToBottom =
+			scrollElement.scrollHeight -
+			(scrollElement.scrollTop + scrollElement.clientHeight);
+		const nextIsAtBottom = distanceToBottom <= BOTTOM_THRESHOLD_PX;
+		if (isAtBottomRef.current === nextIsAtBottom) {
+			return;
+		}
+		isAtBottomRef.current = nextIsAtBottom;
+		setIsAtBottom(nextIsAtBottom);
+	}, []);
+
 	const rowVirtualizer = useVirtualizer({
 		count: logs.length,
-		getScrollElement: () => parentRef.current,
-		estimateSize: () => 44,
+		getScrollElement: () => scrollRef.current,
+		estimateSize: () => ROW_HEIGHT_PX,
 		overscan: 8,
 		useFlushSync: false,
 	});
+
+	const handleJumpToLatest = useCallback(() => {
+		if (logs.length === 0) {
+			return;
+		}
+		rowVirtualizer.scrollToIndex(logs.length - 1, {
+			align: "end",
+			behavior: "smooth",
+		});
+		isAtBottomRef.current = true;
+		setIsAtBottom(true);
+	}, [logs.length, rowVirtualizer]);
+
+	const handleRowClick = useCallback((event: LogEvent) => {
+		setSelectedEvent(event);
+	}, []);
+
+	useEffect(() => {
+		const previousLogCount = prevLogCountRef.current;
+		const hasAppended = logs.length > previousLogCount;
+		prevLogCountRef.current = logs.length;
+
+		if (!hasAppended || !isAtBottomRef.current || logs.length === 0) {
+			return;
+		}
+		rowVirtualizer.scrollToIndex(logs.length - 1, {
+			align: "end",
+			behavior: "auto",
+		});
+	}, [logs.length, rowVirtualizer]);
+
+	const parsedSelectedJson = useMemo(() => {
+		if (!selectedEvent) {
+			return null;
+		}
+		return parseJsonLine(selectedEvent.line);
+	}, [selectedEvent]);
+
 	const virtualRows = rowVirtualizer.getVirtualItems();
-	const paddingTop = virtualRows.length > 0 ? virtualRows[0].start : 0;
-	const paddingBottom =
-		virtualRows.length > 0
-			? rowVirtualizer.getTotalSize() - virtualRows[virtualRows.length - 1].end
-			: 0;
+	const totalSize = rowVirtualizer.getTotalSize();
 
+	const isOpen = selectedEvent !== null;
+	const handleOpenChange = (open: boolean) => {
+		if (!open) {
+			setSelectedEvent(null);
+		}
+	};
 	return (
-		<main
-			ref={parentRef}
-			className="flex-1 overflow-y-auto px-4 py-2 overflow-x-auto"
-		>
-			<div className={`grid ${LOG_ROW_GRID_CLASS} gap-y-0 gap-x-3 min-w-120`}>
-				<div className="col-span-full grid grid-cols-subgrid items-center border-b border-zinc-700/80 px-2 py-1 text-[11px] uppercase tracking-[0.04em] text-zinc-500">
-					<span aria-hidden="true"></span>
-					<span>seq</span>
-					<span>time</span>
-					<span>source</span>
-					<span>message</span>
-				</div>
-				<Accordion.Root
-					collapsible={true}
-					multiple={true}
-					lazyMount={true}
-					unmountOnExit={true}
-					className="col-span-full grid grid-cols-subgrid"
-				>
-					<div className="col-span-full grid grid-cols-subgrid border-y border-zinc-700/70 bg-zinc-900/35">
-						{paddingTop > 0 ? (
+		<div className="flex-1 min-h-0 overflow-hidden py-2">
+			<SidePanel.Root
+				open={isOpen}
+				onOpenChange={handleOpenChange}
+				minMainSize={LIST_PANEL_MIN_SIZE}
+				minPanelSize={DETAIL_PANEL_MIN_SIZE}
+				className="min-w-120"
+			>
+				<SidePanel.Main className="relative min-w-0">
+					<div className="flex h-full min-h-0 flex-col overflow-x-auto">
+						<div className="px-4">
 							<div
-								aria-hidden="true"
-								className="col-span-full"
-								style={{ height: `${paddingTop}px` }}
-							/>
-						) : null}
-						<div className="col-span-full grid grid-cols-subgrid divide-y divide-zinc-700/70">
-							{virtualRows.map((virtualRow) => {
-								const event = logs[virtualRow.index];
-								if (!event) {
-									return null;
-								}
-								return (
-									<div
-										key={event.seq}
-										data-index={virtualRow.index}
-										ref={rowVirtualizer.measureElement}
-										className="col-span-full grid grid-cols-subgrid"
-									>
-										<MemoizedLogListItem event={event} />
-									</div>
-								);
-							})}
+								className={`grid ${LOG_ROW_GRID_CLASS} px-2 gap-x-3 border-b border-zinc-700/80 py-1 text-[11px] uppercase tracking-[0.04em] text-zinc-500`}
+							>
+								<span>seq</span>
+								<span>time</span>
+								<span>source</span>
+								<span>message</span>
+							</div>
 						</div>
-						{paddingBottom > 0 ? (
+						<div
+							ref={scrollRef}
+							onScroll={syncAtBottomState}
+							className="min-h-0 flex-1 overflow-y-auto px-4"
+						>
 							<div
-								aria-hidden="true"
-								className="col-span-full"
-								style={{ height: `${paddingBottom}px` }}
-							/>
-						) : null}
+								className="relative border-y border-zinc-700/70 bg-zinc-900/35"
+								style={{ height: `${totalSize}px` }}
+							>
+								{virtualRows.map((virtualRow) => {
+									const event = logs[virtualRow.index];
+									if (!event) {
+										return null;
+									}
+									return (
+										<button
+											type="button"
+											key={event.seq}
+											className={`absolute left-0 top-0 grid w-full ${LOG_ROW_GRID_CLASS} cursor-pointer gap-x-3 border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs transition-colors hover:bg-teal-950/20 ${
+												selectedEvent?.seq === event.seq
+													? "bg-teal-900/35 ring-1 ring-inset ring-teal-500/70"
+													: ""
+											}`}
+											style={{
+												height: `${virtualRow.size}px`,
+												transform: `translateY(${virtualRow.start}px)`,
+											}}
+											onClick={() => handleRowClick(event)}
+										>
+											<span className="whitespace-nowrap text-teal-300">
+												#{event.seq}
+											</span>
+											<span className="whitespace-nowrap text-zinc-400">
+												{formatTimestamp(event.timestamp)}
+											</span>
+											<span className="truncate text-zinc-400">
+												{event.source}
+											</span>
+											<span className="truncate text-zinc-200">
+												{event.line || "\u00a0"}
+											</span>
+										</button>
+									);
+								})}
+							</div>
+						</div>
 					</div>
-				</Accordion.Root>
-			</div>
-		</main>
-	);
-}
+					{logs.length > 0 && !isAtBottom ? (
+						<button
+							type="button"
+							aria-label="Jump to latest"
+							className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-teal-700/80 bg-zinc-900 text-teal-200 shadow-sm transition-colors hover:bg-teal-800"
+							onClick={handleJumpToLatest}
+						>
+							<ArrowDown className="h-4 w-4" aria-hidden="true" />
+						</button>
+					) : null}
+				</SidePanel.Main>
 
-const MemoizedLogListItem = memo(({ event }: { event: LogEvent }) => {
-	return <LogListItem event={event} />;
-});
+				<SidePanel.ResizeTrigger className="group relative w-2 shrink-0 border-x border-zinc-700/80 bg-zinc-900/60 transition-colors hover:bg-teal-950/30" />
 
-function LogListItem({ event }: { event: LogEvent }) {
-	const itemValue = `log-${event.seq}`;
-	const timestamp = new Date(event.timestamp)
-		.toISOString()
-		.replace("T", " ")
-		.replace("Z", "")
-		.slice(0, 23);
-	const parsedJson = parseJsonLine(event.line);
-
-	return (
-		<Accordion.Item
-			key={itemValue}
-			value={itemValue}
-			className="col-span-full grid grid-cols-subgrid overflow-x-hidden"
-		>
-			<Accordion.ItemTrigger className="text-left col-span-full grid grid-cols-subgrid cursor-pointer items-center px-2 py-1.5 transition-colors hover:bg-teal-950/20 data-[state=open]:bg-teal-950/30 select-none">
-				<Accordion.ItemIndicator className="flex h-5 w-5 items-center justify-center rounded text-zinc-500 transition-transform data-[state=open]:rotate-90 data-[state=open]:text-teal-300">
-					<ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-				</Accordion.ItemIndicator>
-				<span className="whitespace-nowrap text-xs text-teal-300">
-					#{event.seq}
-				</span>
-				<span className="whitespace-nowrap text-xs text-zinc-400">
-					{timestamp}
-				</span>
-				<span className="truncate text-xs text-zinc-400">{event.source}</span>
-				<span className="min-w-0 truncate text-xs text-zinc-200">
-					{event.line || "\u00a0"}
-				</span>
-			</Accordion.ItemTrigger>
-			<Accordion.ItemContent className="accordion-content-motion col-span-full px-7 py-2.5">
-				{parsedJson !== null ? (
-					<ContentPanelJson data={parsedJson} />
-				) : (
-					<ContentPanel line={event.line} />
-				)}
-			</Accordion.ItemContent>
-		</Accordion.Item>
+				<SidePanel.Panel className="min-w-0 border-l border-zinc-700 bg-zinc-900">
+					<div className="flex h-full min-h-0 flex-col">
+						<SidePanel.Header className="flex items-center justify-between border-b border-zinc-700 px-4 py-3">
+							<div>
+								<SidePanel.Title className="text-sm font-semibold text-zinc-200">
+									Detail
+								</SidePanel.Title>
+								{selectedEvent && (
+									<p className="mt-0.5 text-xs text-zinc-400">
+										#{selectedEvent.seq} {selectedEvent.source}
+									</p>
+								)}
+							</div>
+							<SidePanel.CloseTrigger className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-200">
+								<PanelRightClose className="h-4 w-4" aria-hidden="true" />
+							</SidePanel.CloseTrigger>
+						</SidePanel.Header>
+						<SidePanel.Body className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
+							{selectedEvent && (
+								<div key={selectedEvent.seq} className="space-y-3">
+									<div className="grid grid-cols-[5rem_1fr] gap-x-3 gap-y-1 text-xs">
+										<span className="text-zinc-500">seq</span>
+										<span className="text-zinc-200">#{selectedEvent.seq}</span>
+										<span className="text-zinc-500">time</span>
+										<span className="text-zinc-200">
+											{formatTimestamp(selectedEvent.timestamp)}
+										</span>
+										<span className="text-zinc-500">source</span>
+										<span className="text-zinc-200">
+											{selectedEvent.source}
+										</span>
+										<span className="text-zinc-500">stream</span>
+										<span className="text-zinc-200">
+											{selectedEvent.stream}
+										</span>
+									</div>
+									<div className="rounded-md border border-zinc-700 bg-zinc-950/70 p-3">
+										{parsedSelectedJson !== null ? (
+											<ContentPanelJson data={parsedSelectedJson} />
+										) : (
+											<ContentPanel line={selectedEvent.line} />
+										)}
+									</div>
+								</div>
+							)}
+						</SidePanel.Body>
+					</div>
+				</SidePanel.Panel>
+			</SidePanel.Root>
+		</div>
 	);
 }
