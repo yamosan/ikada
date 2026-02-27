@@ -1,5 +1,5 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { ArrowDown, PanelRightClose } from "lucide-react";
+import { ArrowDown, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { LogEvent } from "../hook/use-log-events";
 import { ContentPanel } from "./content-panel";
@@ -206,7 +206,7 @@ export function LogList({ logs }: LogListProps) {
 								)}
 							</div>
 							<SidePanel.CloseTrigger className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-200">
-								<PanelRightClose className="h-4 w-4" aria-hidden="true" />
+								<X className="h-4 w-4" aria-hidden="true" />
 							</SidePanel.CloseTrigger>
 						</SidePanel.Header>
 						<SidePanel.Body className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
