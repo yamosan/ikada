@@ -194,14 +194,16 @@ export function LogList({ logs }: LogListProps) {
 				<SidePanel.Panel className="min-w-0 border-l border-zinc-700 bg-zinc-900">
 					<div className="flex h-full min-h-0 flex-col">
 						<SidePanel.Header className="flex items-center justify-between border-b border-zinc-700 px-4 py-3">
-							<div>
-								<SidePanel.Title className="text-sm font-semibold text-zinc-200">
-									Detail
-								</SidePanel.Title>
+							<div className="flex items-baseline gap-2">
 								{selectedEvent && (
-									<p className="mt-0.5 text-xs text-zinc-400">
-										#{selectedEvent.seq} {selectedEvent.source}
-									</p>
+									<>
+										<SidePanel.Title className="text-sm font-semibold text-zinc-200">
+											#{selectedEvent.seq}
+										</SidePanel.Title>
+										<span className="text-xs text-zinc-500">
+											{selectedEvent.source}
+										</span>
+									</>
 								)}
 							</div>
 							<SidePanel.CloseTrigger className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-200">
