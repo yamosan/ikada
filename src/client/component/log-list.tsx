@@ -2,8 +2,7 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { ArrowDown, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { LogEvent } from "../hook/use-log-events";
-import { ContentPanel } from "./content-panel";
-import { ContentPanelJson } from "./content-panel-json";
+import { JsonPreview, RawPreview } from "./content-panel";
 import { SidePanel } from "./side-panel";
 
 type LogListProps = {
@@ -230,9 +229,9 @@ export function LogList({ logs }: LogListProps) {
 									</div>
 									<div className="rounded-md border border-zinc-700 bg-zinc-950/70 p-3">
 										{parsedSelectedJson !== null ? (
-											<ContentPanelJson data={parsedSelectedJson} />
+											<JsonPreview data={parsedSelectedJson} line={selectedEvent.line} />
 										) : (
-											<ContentPanel line={selectedEvent.line} />
+											<RawPreview line={selectedEvent.line} />
 										)}
 									</div>
 								</div>

@@ -4,18 +4,19 @@ import { JsonTreeViewStyled } from "./json-tree-view";
 
 type JsonPreviewProps = {
 	data: unknown;
+	line: string;
 };
 
 const DEFAULT_EXPANDED_DEPTH = 1;
 
-export function JsonPreview({ data }: JsonPreviewProps) {
+export function JsonPreview({ data, line }: JsonPreviewProps) {
 	return (
 		<JsonTreeViewStyled.Root
 			defaultExpandedDepth={DEFAULT_EXPANDED_DEPTH}
 			data={data}
 		>
 			<Toolbar>
-				<CopyButton data={data} />
+				<CopyButton line={line} />
 				<ExpandCollapseButton />
 			</Toolbar>
 			<div className="overflow-x-auto">
@@ -51,16 +52,14 @@ function ToolbarButton({
 	);
 }
 
-function CopyButton({ data }: JsonPreviewProps) {
-	const jsonText = useMemo(() => JSON.stringify(data, null, 2), [data]);
-
+function CopyButton({ line }: { line: string }) {
 	return (
-		<Clipboard.Root value={jsonText} timeout={1200}>
+		<Clipboard.Root value={line} timeout={1200}>
 			<Clipboard.Context>
 				{(clipboard) => (
 					<Clipboard.Trigger asChild>
 						<ToolbarButton>
-							{clipboard.copied ? "Copied" : "Copy JSON"}
+							{clipboard.copied ? "Copied" : "Copy Raw"}
 						</ToolbarButton>
 					</Clipboard.Trigger>
 				)}
