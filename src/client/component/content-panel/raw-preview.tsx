@@ -25,7 +25,7 @@ export function RawPreview({ line }: RawPreviewProps) {
 					</Clipboard.Root>
 				</div>
 			</div>
-			<pre className="m-0 wrap-break-word whitespace-pre-wrap text-xs leading-relaxed text-zinc-100">
+			<pre className="px-1 m-0 wrap-break-word whitespace-pre-wrap text-xs leading-relaxed text-zinc-100">
 				{line || "\u00a0"}
 			</pre>
 		</div>

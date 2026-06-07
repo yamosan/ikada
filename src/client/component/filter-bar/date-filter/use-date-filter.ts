@@ -107,7 +107,7 @@ export function useDateFilter(
 	);
 
 	const handlePresetSelect = (filter: FilterDraft, label: string) => {
-		onDraftChange(filter);
+		onDraftChange({ ...draft, date: filter.date });
 		onApply();
 		setActiveLabel(label);
 		setIsOpen(false);
@@ -126,7 +126,7 @@ export function useDateFilter(
 	};
 
 	const handleClear = () => {
-		onDraftChange(DEFAULT_FILTER_DRAFT);
+		onDraftChange({ ...draft, date: DEFAULT_FILTER_DRAFT.date });
 		onApply();
 		setActiveLabel(null);
 		setIsOpen(false);

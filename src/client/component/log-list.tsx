@@ -148,10 +148,10 @@ export function LogList({ logs }: LogListProps) {
 										<button
 											type="button"
 											key={event.seq}
-											className={`absolute left-0 top-0 grid w-full ${LOG_ROW_GRID_CLASS} cursor-pointer gap-x-3 border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs transition-colors hover:bg-teal-950/20 ${
+											className={`absolute left-0 top-0 grid w-full ${LOG_ROW_GRID_CLASS} cursor-pointer gap-x-3 border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs transition-colors outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-teal-400/50 ${
 												selectedEvent?.seq === event.seq
-													? "bg-teal-900/35 ring-1 ring-inset ring-teal-500/70"
-													: ""
+													? "bg-teal-900/35 ring-1 ring-inset ring-teal-500/70 hover:bg-teal-800/45"
+													: "hover:bg-teal-950/20"
 											}`}
 											style={{
 												height: `${virtualRow.size}px`,

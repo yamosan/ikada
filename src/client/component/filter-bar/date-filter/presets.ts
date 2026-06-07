@@ -19,6 +19,7 @@ export type PresetGroup = {
 
 function buildAfterFilter(msAgo: number): FilterDraft {
 	return {
+		...DEFAULT_FILTER_DRAFT,
 		date: {
 			...DEFAULT_FILTER_DRAFT.date,
 			operator: "after",
