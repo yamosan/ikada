@@ -24,6 +24,17 @@ export function DateFilter({
 		if (!isLive) onToggleLive();
 	});
 	const isActive = filter.canClear;
+	const isTriggerHighlighted = !isLive && (isActive || filter.isOpen);
+
+	const triggerShellClass = isLive
+		? "opacity-40"
+		: isTriggerHighlighted
+			? "ring-teal-600/70"
+			: "ring-zinc-700 hover:ring-zinc-600";
+
+	const triggerShellRingClass = isLive
+		? ""
+		: "ring-1 ring-inset focus-within:ring-2 focus-within:ring-teal-600/70";
 
 	return (
 		<Popover.Root
@@ -31,19 +42,19 @@ export function DateFilter({
 			onOpenChange={(details) => filter.setIsOpen(details.open)}
 			positioning={{ placement: "bottom-start" }}
 		>
-			<div className="flex">
+			<div
+				className={`relative z-10 flex ${isLive ? "rounded-md ring-1 ring-inset ring-teal-600/70" : ""}`}
+			>
 				{/* ── 左: 日付ピッカートリガー ── */}
 				<Tooltip.Root openDelay={400} closeDelay={0} disabled={filter.isOpen || isLive}>
 					<Tooltip.Trigger asChild>
-						<div className="inline-flex">
+						<div
+							className={`relative z-10 rounded-l-md bg-zinc-950 transition-[color,box-shadow] ${triggerShellRingClass} ${triggerShellClass}`}
+						>
 							<Popover.Trigger
 								disabled={isLive}
-								className={`flex h-9 w-52 items-center gap-2 rounded-l-md border border-r-0 bg-zinc-950 px-3 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-teal-600/70 ${
-									isLive
-										? "cursor-not-allowed border-zinc-700 opacity-40"
-										: isActive
-											? "border-teal-600/70 hover:border-teal-500"
-											: "border-zinc-700 hover:border-zinc-600"
+								className={`flex h-9 w-52 items-center gap-2 rounded-l-md border-0 bg-transparent px-3 text-sm transition-colors focus-visible:outline-none ${
+									isLive ? "cursor-not-allowed" : ""
 								}`}
 							>
 								<Clock
@@ -80,10 +91,10 @@ export function DateFilter({
 				<button
 					type="button"
 					onClick={onToggleLive}
-					className={`flex h-9 items-center gap-2.5 rounded-r-md border px-3.5 text-xs font-semibold tracking-wide transition-colors ${
+					className={`flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide transition-colors ${
 						isLive
-							? "border-teal-600/70 bg-teal-900/50 text-teal-300 hover:bg-teal-800/60"
-							: "border-zinc-700 bg-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-zinc-200"
+							? "border-0 bg-teal-900/50 text-teal-300 hover:bg-teal-800/60"
+							: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-zinc-200"
 					}`}
 				>
 					{isLive ? (
