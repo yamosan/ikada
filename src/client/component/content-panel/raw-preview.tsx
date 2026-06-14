@@ -7,7 +7,7 @@ type RawPreviewProps = {
 export function RawPreview({ line }: RawPreviewProps) {
 	return (
 		<div>
-			<div className="mb-1.5 flex items-center gap-2 px-1 pt-0.5 pb-2">
+			<div className="mb-1.5 px-1 pt-0.5 pb-2">
 				<div className="inline-flex items-center gap-1.5">
 					<Clipboard.Root value={line} timeout={1200}>
 						<Clipboard.Context>

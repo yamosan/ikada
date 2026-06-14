@@ -257,7 +257,7 @@ export function LogList({ logs, startBoundary, endBoundary }: LogListProps) {
 											{selectedEvent.stream}
 										</span>
 									</div>
-									<div className="rounded-md border border-zinc-700 bg-zinc-950/70 p-3">
+									<div className="min-w-0 overflow-x-auto rounded-md border border-zinc-700 bg-zinc-950/70 p-3">
 										{parsedSelectedJson !== null ? (
 											<JsonPreview
 												data={parsedSelectedJson}
