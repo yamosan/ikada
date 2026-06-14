@@ -159,10 +159,10 @@ export function LogList({ logs }: LogListProps) {
 											}}
 											onClick={() => handleRowClick(event)}
 										>
-											<span className="whitespace-nowrap text-teal-300">
+											<span className="whitespace-nowrap font-mono text-teal-300">
 												#{event.seq}
 											</span>
-											<span className="whitespace-nowrap text-zinc-400">
+											<span className="whitespace-nowrap font-mono text-zinc-400">
 												{formatTimestamp(event.timestamp)}
 											</span>
 											<span className="truncate text-zinc-400">
@@ -231,7 +231,10 @@ export function LogList({ logs }: LogListProps) {
 									</div>
 									<div className="rounded-md border border-zinc-700 bg-zinc-950/70 p-3">
 										{parsedSelectedJson !== null ? (
-											<JsonPreview data={parsedSelectedJson} line={selectedEvent.line} />
+											<JsonPreview
+												data={parsedSelectedJson}
+												line={selectedEvent.line}
+											/>
 										) : (
 											<RawPreview line={selectedEvent.line} />
 										)}

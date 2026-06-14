@@ -1,5 +1,5 @@
 import { DateFilter } from "./date-filter";
-import { type FilterDraft } from "./filter";
+import type { FilterDraft } from "./filter";
 import { SourceFilter } from "./source-filter";
 import { TextSearch } from "./text-search";
 
@@ -7,12 +7,16 @@ type FilterBarProps = {
 	filter: FilterDraft;
 	onFilterChange: (next: FilterDraft) => void;
 	availableSources: string[];
+	isLive: boolean;
+	onToggleLive: () => void;
 };
 
 export function FilterBar({
 	filter,
 	onFilterChange,
 	availableSources,
+	isLive,
+	onToggleLive,
 }: FilterBarProps) {
 	return (
 		<section className="border-b border-zinc-700 bg-zinc-900/60 px-3 py-2">
@@ -30,6 +34,8 @@ export function FilterBar({
 					draft={filter}
 					onDraftChange={onFilterChange}
 					onApply={() => {}}
+					isLive={isLive}
+					onToggleLive={onToggleLive}
 				/>
 			</div>
 		</section>

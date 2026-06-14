@@ -87,6 +87,7 @@ program
 program
 	.command("ingest")
 	.description("Read stdin and ingest logs to server")
+	.option("--source <name>", "Log source name", "stdin")
 	.action(async (_options, command) => {
 		const hasPipedInput = !process.stdin.isTTY;
 		if (!hasPipedInput) {

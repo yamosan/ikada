@@ -1,6 +1,10 @@
 import type { DateValue } from "@internationalized/date";
 import { useMemo, useState } from "react";
-import { DEFAULT_FILTER_DRAFT, type FilterDraft } from "../filter";
+import {
+	DEFAULT_FILTER_DRAFT,
+	type DateFilterOperator,
+	type FilterDraft,
+} from "../filter";
 import { toCalendarDateTime } from "./date-utils";
 import {
 	buildDynamicPreset,
@@ -65,6 +69,9 @@ export type UseDateFilterReturn = {
 	searchInput: string;
 	setSearchInput: (input: string) => void;
 
+	localDraft: FilterDraft;
+	onOperatorChange: (operator: DateFilterOperator) => void;
+
 	filteredPresetGroups: PresetGroup[];
 	dynamicPreset: { label: string; filter: FilterDraft } | null;
 
@@ -84,13 +91,22 @@ export type UseDateFilterReturn = {
 };
 
 export function useDateFilter(
-	draft: FilterDraft,
+	confirmedDraft: FilterDraft,
 	onDraftChange: (next: FilterDraft) => void,
 	onApply: () => void,
 ): UseDateFilterReturn {
 	const [isOpen, setIsOpen] = useState(false);
+	const [localDraft, setLocalDraft] = useState<FilterDraft>(confirmedDraft);
 	const [activeLabel, setActiveLabel] = useState<string | null>(null);
 	const [searchInput, setSearchInput] = useState("");
+
+	const handleSetIsOpen = (open: boolean) => {
+		if (open) {
+			// ポップオーバーを開くたびに確定済み状態に戻す
+			setLocalDraft(confirmedDraft);
+		}
+		setIsOpen(open);
+	};
 
 	const filteredPresetGroups = useMemo<PresetGroup[]>(() => {
 		const q = searchInput.trim().toLowerCase();
@@ -106,8 +122,9 @@ export function useDateFilter(
 		[searchInput],
 	);
 
+	// プリセット・Apply・Clear のみ親に伝播する
 	const handlePresetSelect = (filter: FilterDraft, label: string) => {
-		onDraftChange({ ...draft, date: filter.date });
+		onDraftChange({ ...confirmedDraft, date: filter.date });
 		onApply();
 		setActiveLabel(label);
 		setIsOpen(false);
@@ -119,17 +136,26 @@ export function useDateFilter(
 	};
 
 	const handleApply = () => {
-		if (checkApplyDisabled(draft)) return;
+		if (checkApplyDisabled(localDraft)) return;
+		onDraftChange(localDraft);
 		onApply();
 		setActiveLabel(null);
 		setIsOpen(false);
 	};
 
 	const handleClear = () => {
-		onDraftChange({ ...draft, date: DEFAULT_FILTER_DRAFT.date });
+		onDraftChange({ ...confirmedDraft, date: DEFAULT_FILTER_DRAFT.date });
 		onApply();
 		setActiveLabel(null);
 		setIsOpen(false);
+	};
+
+	// 以下はローカル draft のみ更新（未確定状態）
+	const handleOperatorChange = (operator: DateFilterOperator) => {
+		setLocalDraft({
+			...localDraft,
+			date: { ...localDraft.date, operator },
+		});
 	};
 
 	const handleDateChange = (
@@ -138,39 +164,41 @@ export function useDateFilter(
 	) => {
 		const str = newValue ? toCalendarDateTime(newValue).toString() : "";
 		if (field === "start") {
-			onDraftChange({
-				...draft,
-				date: { ...draft.date, between: { ...draft.date.between, start: str } },
+			setLocalDraft({
+				...localDraft,
+				date: { ...localDraft.date, between: { ...localDraft.date.between, start: str } },
 			});
 		} else if (field === "end") {
-			onDraftChange({
-				...draft,
-				date: { ...draft.date, between: { ...draft.date.between, end: str } },
+			setLocalDraft({
+				...localDraft,
+				date: { ...localDraft.date, between: { ...localDraft.date.between, end: str } },
 			});
-		} else if (draft.date.operator === "before") {
-			onDraftChange({
-				...draft,
-				date: { ...draft.date, before: { value: str } },
+		} else if (localDraft.date.operator === "before") {
+			setLocalDraft({
+				...localDraft,
+				date: { ...localDraft.date, before: { value: str } },
 			});
 		} else {
-			onDraftChange({
-				...draft,
-				date: { ...draft.date, after: { value: str } },
+			setLocalDraft({
+				...localDraft,
+				date: { ...localDraft.date, after: { value: str } },
 			});
 		}
 	};
 
 	return {
 		isOpen,
-		setIsOpen,
+		setIsOpen: handleSetIsOpen,
+		localDraft,
+		onOperatorChange: handleOperatorChange,
 		searchInput,
 		setSearchInput,
 		filteredPresetGroups,
 		dynamicPreset,
-		applyDisabled: checkApplyDisabled(draft),
-		canClear: !checkIsDefault(draft),
-		hasInvalidRange: checkInvalidRange(draft),
-		triggerDescription: activeLabel ?? describeDraft(draft),
+		applyDisabled: checkApplyDisabled(localDraft),
+		canClear: !checkIsDefault(confirmedDraft),
+		hasInvalidRange: checkInvalidRange(localDraft),
+		triggerDescription: (activeLabel !== null && !checkIsDefault(confirmedDraft)) ? activeLabel : describeDraft(confirmedDraft),
 		onPresetSelect: handlePresetSelect,
 		onDynamicPresetSelect: handleDynamicPresetSelect,
 		onApply: handleApply,
