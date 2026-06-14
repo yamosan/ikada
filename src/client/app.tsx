@@ -3,13 +3,40 @@ import { FilterBar } from "./component/filter-bar";
 import {
 	applyFilter,
 	DEFAULT_FILTER_DRAFT,
-	describePausedBanner,
 	type FilterDraft,
 	hasActiveDateFilter,
 } from "./component/filter-bar/filter";
+import { localISOString } from "./component/filter-bar/date-filter/date-utils";
 import { LogList } from "./component/log-list";
-import { SnapshotBanner } from "./component/snapshot-banner";
 import { useLogEvents } from "./hook/use-log-events";
+
+function getBoundaries(
+	filter: FilterDraft,
+	dateAppliedAt: number,
+): { start: Date | null; end: Date | null } {
+	const { date } = filter;
+	const appliedAt = new Date(dateAppliedAt);
+
+	if (date.operator === "after" && date.after.value) {
+		return {
+			start: new Date(Date.parse(date.after.value)),
+			end: appliedAt,
+		};
+	}
+	if (date.operator === "between") {
+		return {
+			start: date.between.start ? new Date(Date.parse(date.between.start)) : null,
+			end: date.between.end ? new Date(Date.parse(date.between.end)) : appliedAt,
+		};
+	}
+	if (date.operator === "before" && date.before.value) {
+		return {
+			start: null,
+			end: new Date(Date.parse(date.before.value)),
+		};
+	}
+	return { start: null, end: appliedAt };
+}
 
 function App() {
 	const { logs } = useLogEvents();
@@ -20,7 +47,15 @@ function App() {
 
 	const handleToggleLive = useCallback(() => {
 		if (isLive) {
-			setDateAppliedAt(Date.now());
+			const now = Date.now();
+			const beforeDate = {
+				...DEFAULT_FILTER_DRAFT.date,
+				operator: "before" as const,
+				before: { value: localISOString(new Date(now)) },
+			};
+			prevDateRef.current = beforeDate;
+			setDateAppliedAt(now);
+			setFilter((prev) => ({ ...prev, date: beforeDate }));
 			setIsLive(false);
 		} else {
 			prevDateRef.current = DEFAULT_FILTER_DRAFT.date;
@@ -53,6 +88,11 @@ function App() {
 		return applyFilter(baseLogs, filter);
 	}, [logs, filter, isLive, dateAppliedAt]);
 
+	const boundaries = useMemo(
+		() => (isLive ? { start: null, end: null } : getBoundaries(filter, dateAppliedAt)),
+		[isLive, filter, dateAppliedAt],
+	);
+
 	return (
 		<div className="flex h-full flex-col bg-zinc-900 text-zinc-200">
 			{/* <div className="flex h-full flex-col bg-zinc-900 font-mono text-zinc-200"> */}
@@ -63,13 +103,11 @@ function App() {
 				isLive={isLive}
 				onToggleLive={handleToggleLive}
 			/>
-			{!isLive && (
-				<SnapshotBanner
-					description={describePausedBanner(filter, dateAppliedAt)}
-					onResumeLive={handleToggleLive}
-				/>
-			)}
-			<LogList logs={displayedLogs} />
+			<LogList
+				logs={displayedLogs}
+				startBoundary={boundaries.start}
+				endBoundary={boundaries.end}
+			/>
 		</div>
 	);
 }

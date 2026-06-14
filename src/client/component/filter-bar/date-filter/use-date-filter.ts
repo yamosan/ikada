@@ -94,6 +94,7 @@ export function useDateFilter(
 	confirmedDraft: FilterDraft,
 	onDraftChange: (next: FilterDraft) => void,
 	onApply: () => void,
+	onClear: () => void,
 ): UseDateFilterReturn {
 	const [isOpen, setIsOpen] = useState(false);
 	const [localDraft, setLocalDraft] = useState<FilterDraft>(confirmedDraft);
@@ -144,8 +145,7 @@ export function useDateFilter(
 	};
 
 	const handleClear = () => {
-		onDraftChange({ ...confirmedDraft, date: DEFAULT_FILTER_DRAFT.date });
-		onApply();
+		onClear();
 		setActiveLabel(null);
 		setIsOpen(false);
 	};

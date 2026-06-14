@@ -7,7 +7,33 @@ import { SidePanel } from "./side-panel";
 
 type LogListProps = {
 	logs: LogEvent[];
+	startBoundary?: Date | null;
+	endBoundary?: Date | null;
 };
+
+function formatBoundaryTs(date: Date): string {
+	return date.toLocaleString("en-US", {
+		month: "numeric",
+		day: "numeric",
+		year: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit",
+		hour12: false,
+	});
+}
+
+function BoundaryRow({ date }: { date: Date }) {
+	return (
+		<div className="flex shrink-0 items-center gap-3 px-6 py-1">
+			<div className="flex-1 border-t border-blue-800/50" />
+			<span className="shrink-0 font-mono text-[11px] text-blue-400/80">
+				{formatBoundaryTs(date)}
+			</span>
+			<div className="flex-1 border-t border-blue-800/50" />
+		</div>
+	);
+}
 
 const LOG_ROW_GRID_CLASS =
 	"grid-cols-[3.5rem_10.5rem_fit-content(6rem)_minmax(0,1fr)]";
@@ -32,7 +58,7 @@ function parseJsonLine(line: string): unknown | null {
 	}
 }
 
-export function LogList({ logs }: LogListProps) {
+export function LogList({ logs, startBoundary, endBoundary }: LogListProps) {
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [isAtBottom, setIsAtBottom] = useState(true);
 	const isAtBottomRef = useRef(true);
@@ -130,6 +156,7 @@ export function LogList({ logs }: LogListProps) {
 								<span>message</span>
 							</div>
 						</div>
+						{startBoundary && <BoundaryRow date={startBoundary} />}
 						<div
 							ref={scrollRef}
 							onScroll={syncAtBottomState}
@@ -176,6 +203,7 @@ export function LogList({ logs }: LogListProps) {
 								})}
 							</div>
 						</div>
+						{endBoundary && <BoundaryRow date={endBoundary} />}
 					</div>
 					{logs.length > 0 && !isAtBottom ? (
 						<button

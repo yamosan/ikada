@@ -20,7 +20,9 @@ export function DateFilter({
 	isLive,
 	onToggleLive,
 }: DateFilterProps) {
-	const filter = useDateFilter(draft, onDraftChange, onApply);
+	const filter = useDateFilter(draft, onDraftChange, onApply, () => {
+		if (!isLive) onToggleLive();
+	});
 	const isActive = filter.canClear;
 
 	return (
