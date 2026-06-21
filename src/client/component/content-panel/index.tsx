@@ -1,10 +1,6 @@
-import type { LogEvent } from "@/type";
 import { JsonPreview } from "./json-preview";
 import { RawPreview } from "./raw-preview";
-
-type ContentPanelProps = {
-	event: LogEvent;
-};
+import { useContentPanelState } from "./use-content-panel-state";
 
 type LogContent =
 	| { type: "json"; data: unknown; line: string }
@@ -26,7 +22,12 @@ function parseLogContent(line: string): LogContent {
 	}
 }
 
-export function ContentPanel({ event }: ContentPanelProps) {
+export function ContentPanel() {
+	const event = useContentPanelState();
+	if (event === null) {
+		return null;
+	}
+
 	const content = parseLogContent(event.line);
 
 	return (

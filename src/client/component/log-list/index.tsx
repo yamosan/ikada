@@ -1,15 +1,7 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { ArrowDown } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { LogEvent } from "@/type";
-
-type LogListProps = {
-	logs: LogEvent[];
-	selectedSeq?: number;
-	startBoundary?: Date | null;
-	endBoundary?: Date | null;
-	onSelect: (event: LogEvent) => void;
-};
+import { useLogListState } from "./use-log-list-state";
 
 const LOG_ROW_GRID_CLASS =
 	"grid-cols-[3.5rem_10.5rem_fit-content(6rem)_minmax(0,1fr)]";
@@ -48,13 +40,9 @@ function formatTimestamp(timestamp: number): string {
 		.slice(0, 23);
 }
 
-export function LogList({
-	logs,
-	selectedSeq,
-	startBoundary,
-	endBoundary,
-	onSelect,
-}: LogListProps) {
+export function LogList() {
+	const { logs, selectedSeq, startBoundary, endBoundary, selectLog } =
+		useLogListState();
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [isAtBottom, setIsAtBottom] = useState(true);
 	const isAtBottomRef = useRef(true);
@@ -154,7 +142,7 @@ export function LogList({
 										height: `${virtualRow.size}px`,
 										transform: `translateY(${virtualRow.start}px)`,
 									}}
-									onClick={() => onSelect(event)}
+									onClick={() => selectLog(event.seq)}
 								>
 									<span className="whitespace-nowrap font-mono text-teal-300">
 										#{event.seq}

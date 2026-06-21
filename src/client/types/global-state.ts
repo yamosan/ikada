@@ -11,13 +11,14 @@ export type GlobalState = {
 	connection: ConnectionState;
 	filter: FilterDraft;
 	viewMode: GlobalStateViewMode;
-	isLive: boolean;
-	availableSources: string[];
-	displayedLogs: LogEvent[];
 	selectedSeq: number | null;
-	selectedEvent: LogEvent | null;
-	startBoundary: Date | null;
-	endBoundary: Date | null;
+	actions: GlobalStateActions;
+};
+
+export type GlobalStateActions = {
+	setConnection: (connection: ConnectionState) => void;
+	replaceLogs: (logs: LogEvent[]) => void;
+	appendLogs: (logs: LogEvent[]) => void;
 	setTextFilter: (text: string) => void;
 	setSourceFilter: (sources: string[]) => void;
 	applyDateFilter: (filter: FilterDraft) => void;

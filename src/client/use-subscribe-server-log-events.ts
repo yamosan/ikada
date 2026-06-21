@@ -1,7 +1,13 @@
 import { createEventSource } from "eventsource-client";
-import { useEffect, useRef, useState } from "react";
-import type { ConnectionState } from "@/client/types/connection";
+import { useEffect, useRef } from "react";
 import type { LogEvent } from "@/type";
+
+type SubscribeServerLogEventsOptions = {
+	onConnected: () => void;
+	onReconnecting: () => void;
+	onSnapshot: (logs: LogEvent[]) => void;
+	onAppend: (logs: LogEvent[]) => void;
+};
 
 function isValidLogEvent(candidate: unknown): candidate is LogEvent {
 	if (typeof candidate !== "object" || candidate === null) {
@@ -32,12 +38,12 @@ function parseEventBatch(raw: string): LogEvent[] {
 	}
 }
 
-export function useLogEvents(): {
-	logs: LogEvent[];
-	connection: ConnectionState;
-} {
-	const [logs, setLogs] = useState<LogEvent[]>([]);
-	const [connection, setConnection] = useState<ConnectionState>("reconnecting");
+export function useSubscribeServerLogEvents({
+	onConnected,
+	onReconnecting,
+	onSnapshot,
+	onAppend,
+}: SubscribeServerLogEventsOptions): void {
 	const lastSeqRef = useRef<number>(0);
 	const eventSourceRef = useRef<ReturnType<typeof createEventSource> | null>(
 		null,
@@ -63,11 +69,11 @@ export function useLogEvents(): {
 				},
 				body: requestBody,
 				onConnect: () => {
-					setConnection("connected");
+					onConnected();
 				},
 				onDisconnect: () => {
 					if (!isDisposed) {
-						setConnection("reconnecting");
+						onReconnecting();
 					}
 				},
 				onMessage: (event) => {
@@ -77,17 +83,17 @@ export function useLogEvents(): {
 					}
 
 					if (event.event === "snapshot") {
-						setLogs(batch);
+						onSnapshot(batch);
 					} else if (event.event === "append") {
-						setLogs((prev) => [...prev, ...batch]);
+						onAppend(batch);
 					}
 
 					lastSeqRef.current = batch[batch.length - 1].seq;
-					setConnection("connected");
+					onConnected();
 				},
 				onScheduleReconnect: () => {
 					if (!isDisposed) {
-						setConnection("reconnecting");
+						onReconnecting();
 					}
 				},
 			});
@@ -103,7 +109,5 @@ export function useLogEvents(): {
 				eventSourceRef.current = null;
 			}
 		};
-	}, []);
-
-	return { logs, connection };
+	}, [onAppend, onConnected, onReconnecting, onSnapshot]);
 }
