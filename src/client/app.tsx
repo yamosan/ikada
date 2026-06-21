@@ -1,7 +1,7 @@
-import { FilterBar } from "./component/filter-bar";
-import { LogExplorer } from "./component/log-explorer";
-import { useLogEvents } from "./use-log-events";
-import { useLogFilter } from "./use-log-filter";
+import { FilterBar } from "@/client/component/filter-bar";
+import { LogExplorer } from "@/client/component/log-explorer";
+import { useLogEvents } from "@/client/use-log-events";
+import { useLogFilter } from "@/client/use-log-filter";
 
 function App() {
 	const { logs } = useLogEvents();

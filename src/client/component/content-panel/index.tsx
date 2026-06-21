@@ -1,4 +1,4 @@
-import type { LogEvent } from "../../../type";
+import type { LogEvent } from "@/type";
 import { JsonPreview } from "./json-preview";
 import { RawPreview } from "./raw-preview";
 

@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import { useState } from "react";
-import type { LogEvent } from "../../type";
+import type { LogEvent } from "@/type";
 import { ContentPanel } from "./content-panel";
 import { LogList } from "./log-list";
 import { SidePanel } from "./side-panel";

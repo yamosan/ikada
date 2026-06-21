@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { LogEvent } from "../type";
 import {
 	applyFilter,
 	createPausedDateFilter,
@@ -7,7 +6,8 @@ import {
 	type FilterDraft,
 	getDateFilterBoundaries,
 	hasActiveDateFilter,
-} from "./component/filter-bar/filter";
+} from "@/client/component/filter-bar/filter";
+import type { LogEvent } from "@/type";
 
 export function useLogFilter(logs: LogEvent[]): {
 	filter: FilterDraft;

@@ -1,6 +1,6 @@
 import { createEventSource } from "eventsource-client";
 import { useEffect, useRef, useState } from "react";
-import type { LogEvent } from "../type";
+import type { LogEvent } from "@/type";
 import type { ConnectionState } from "./log-event";
 
 function isValidLogEvent(candidate: unknown): candidate is LogEvent {

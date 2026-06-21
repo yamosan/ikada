@@ -1,7 +1,7 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { ArrowDown } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { LogEvent } from "../../type";
+import type { LogEvent } from "@/type";
 
 type LogListProps = {
 	logs: LogEvent[];
