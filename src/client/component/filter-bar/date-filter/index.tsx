@@ -1,6 +1,6 @@
 import { Popover, Portal, Tooltip } from "@ark-ui/react";
 import { ChevronDown, Clock, Play, Square } from "lucide-react";
-import type { FilterDraft } from "../filter";
+import type { FilterDraft } from "@/client/types/filter";
 import { DateForm } from "./date-form";
 import { PresetPanel } from "./preset-panel";
 import { useDateFilter } from "./use-date-filter";

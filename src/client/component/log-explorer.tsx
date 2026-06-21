@@ -1,5 +1,4 @@
 import { X } from "lucide-react";
-import { useState } from "react";
 import type { LogEvent } from "@/type";
 import { ContentPanel } from "./content-panel";
 import { LogList } from "./log-list";
@@ -7,8 +6,12 @@ import { SidePanel } from "./side-panel";
 
 type LogExplorerProps = {
 	logs: LogEvent[];
+	selectedSeq: number | null;
+	selectedEvent: LogEvent | null;
 	startBoundary?: Date | null;
 	endBoundary?: Date | null;
+	onSelect: (seq: number) => void;
+	onClose: () => void;
 };
 
 const LIST_PANEL_MIN_SIZE = 35;
@@ -16,14 +19,16 @@ const DETAIL_PANEL_MIN_SIZE = 20;
 
 export function LogExplorer({
 	logs,
+	selectedSeq,
+	selectedEvent,
 	startBoundary,
 	endBoundary,
+	onSelect,
+	onClose,
 }: LogExplorerProps) {
-	const [selectedEvent, setSelectedEvent] = useState<LogEvent | null>(null);
-
 	const handleOpenChange = (open: boolean) => {
 		if (!open) {
-			setSelectedEvent(null);
+			onClose();
 		}
 	};
 
@@ -39,10 +44,10 @@ export function LogExplorer({
 				<SidePanel.Main className="min-w-0">
 					<LogList
 						logs={logs}
-						selectedSeq={selectedEvent?.seq}
+						selectedSeq={selectedSeq ?? undefined}
 						startBoundary={startBoundary}
 						endBoundary={endBoundary}
-						onSelect={setSelectedEvent}
+						onSelect={(event) => onSelect(event.seq)}
 					/>
 				</SidePanel.Main>
 

@@ -1,21 +1,25 @@
+import type { FilterDraft } from "@/client/types/filter";
 import { DateFilter } from "./date-filter";
-import type { FilterDraft } from "./filter";
 import { SourceFilter } from "./source-filter";
 import { TextSearch } from "./text-search";
 
 type FilterBarProps = {
 	filter: FilterDraft;
-	onFilterChange: (next: FilterDraft) => void;
 	availableSources: string[];
 	isLive: boolean;
+	onTextFilterChange: (text: string) => void;
+	onSourceFilterChange: (sources: string[]) => void;
+	onDateFilterApply: (next: FilterDraft) => void;
 	onToggleLive: () => void;
 };
 
 export function FilterBar({
 	filter,
-	onFilterChange,
 	availableSources,
 	isLive,
+	onTextFilterChange,
+	onSourceFilterChange,
+	onDateFilterApply,
 	onToggleLive,
 }: FilterBarProps) {
 	return (
@@ -24,15 +28,12 @@ export function FilterBar({
 				<SourceFilter
 					availableSources={availableSources}
 					value={filter.sources}
-					onChange={(sources) => onFilterChange({ ...filter, sources })}
+					onChange={onSourceFilterChange}
 				/>
-				<TextSearch
-					value={filter.text}
-					onChange={(text) => onFilterChange({ ...filter, text })}
-				/>
+				<TextSearch value={filter.text} onChange={onTextFilterChange} />
 				<DateFilter
 					draft={filter}
-					onDraftChange={onFilterChange}
+					onDraftChange={onDateFilterApply}
 					isLive={isLive}
 					onToggleLive={onToggleLive}
 				/>

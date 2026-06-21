@@ -1,8 +1,5 @@
-import {
-	createAfterDateFilter,
-	DEFAULT_FILTER_DRAFT,
-	type FilterDraft,
-} from "../filter";
+import type { FilterDraft } from "@/client/types/filter";
+import { createAfterDateFilter, DEFAULT_FILTER_DRAFT } from "../filter";
 
 const SEC_MS = 1000;
 const MIN_MS = 60 * SEC_MS;

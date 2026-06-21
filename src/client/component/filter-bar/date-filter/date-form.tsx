@@ -1,7 +1,7 @@
 import { createListCollection, Select } from "@ark-ui/react";
 import type { DateValue } from "@internationalized/date";
 import { Check, ChevronDown } from "lucide-react";
-import type { DateFilterOperator, FilterDraft } from "../filter";
+import type { DateFilterOperator, FilterDraft } from "@/client/types/filter";
 import { DateInputWithPicker } from "./date-input-with-picker";
 import { toDateValue } from "./date-utils";
 

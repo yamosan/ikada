@@ -1,5 +1,5 @@
 import { Clock } from "lucide-react";
-import type { FilterDraft } from "../filter";
+import type { FilterDraft } from "@/client/types/filter";
 import type { PresetGroup } from "./presets";
 
 type PresetPanelProps = {
