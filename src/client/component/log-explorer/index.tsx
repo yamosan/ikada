@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { ContentPanel } from "../content-panel";
+import { LogDetailContent } from "../log-detail-content";
 import { LogList } from "../log-list";
 import { SidePanel } from "../side-panel";
 import { useLogExplorerState } from "./use-log-explorer-state";
@@ -52,7 +52,7 @@ export function LogExplorer() {
 							</SidePanel.CloseTrigger>
 						</SidePanel.Header>
 						<SidePanel.Body className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
-							<ContentPanel />
+							<LogDetailContent />
 						</SidePanel.Body>
 					</div>
 				</SidePanel.Panel>
