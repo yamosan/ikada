@@ -1,8 +1,8 @@
 import type { DateValue } from "@internationalized/date";
 import { useMemo, useState } from "react";
 import {
-	DEFAULT_FILTER_DRAFT,
 	type DateFilterOperator,
+	DEFAULT_FILTER_DRAFT,
 	type FilterDraft,
 } from "../filter";
 import { toCalendarDateTime } from "./date-utils";
@@ -166,12 +166,18 @@ export function useDateFilter(
 		if (field === "start") {
 			setLocalDraft({
 				...localDraft,
-				date: { ...localDraft.date, between: { ...localDraft.date.between, start: str } },
+				date: {
+					...localDraft.date,
+					between: { ...localDraft.date.between, start: str },
+				},
 			});
 		} else if (field === "end") {
 			setLocalDraft({
 				...localDraft,
-				date: { ...localDraft.date, between: { ...localDraft.date.between, end: str } },
+				date: {
+					...localDraft.date,
+					between: { ...localDraft.date.between, end: str },
+				},
 			});
 		} else if (localDraft.date.operator === "before") {
 			setLocalDraft({
@@ -198,7 +204,10 @@ export function useDateFilter(
 		applyDisabled: checkApplyDisabled(localDraft),
 		canClear: !checkIsDefault(confirmedDraft),
 		hasInvalidRange: checkInvalidRange(localDraft),
-		triggerDescription: (activeLabel !== null && !checkIsDefault(confirmedDraft)) ? activeLabel : describeDraft(confirmedDraft),
+		triggerDescription:
+			activeLabel !== null && !checkIsDefault(confirmedDraft)
+				? activeLabel
+				: describeDraft(confirmedDraft),
 		onPresetSelect: handlePresetSelect,
 		onDynamicPresetSelect: handleDynamicPresetSelect,
 		onApply: handleApply,

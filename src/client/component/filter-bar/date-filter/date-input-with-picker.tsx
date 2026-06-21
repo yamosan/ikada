@@ -53,17 +53,23 @@ export function DateInputWithPicker({
 				>
 					<DateInput.SegmentGroup className="flex h-8 w-full items-center rounded border border-zinc-700 bg-zinc-950 px-2.5 text-sm focus-within:border-teal-600">
 						<DateInput.Context>
-							{(api) =>
-								api
-									.getSegments()
-									.map((segment, i) => (
+							{(api) => {
+								const segmentCounts = new Map<string, number>();
+
+								return api.getSegments().map((segment) => {
+									const keyBase = `${segment.type}-${segment.text}`;
+									const occurrence = segmentCounts.get(keyBase) ?? 0;
+									segmentCounts.set(keyBase, occurrence + 1);
+
+									return (
 										<DateInput.Segment
-											key={`${segment.type}-${i}`}
+											key={`${keyBase}-${occurrence}`}
 											segment={segment}
 											className={SEGMENT_CLASS}
 										/>
-									))
-							}
+									);
+								});
+							}}
 						</DateInput.Context>
 					</DateInput.SegmentGroup>
 					<DateInput.HiddenInput />

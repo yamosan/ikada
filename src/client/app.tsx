@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { FilterBar } from "./component/filter-bar";
+import { localISOString } from "./component/filter-bar/date-filter/date-utils";
 import {
 	applyFilter,
 	DEFAULT_FILTER_DRAFT,
 	type FilterDraft,
 	hasActiveDateFilter,
 } from "./component/filter-bar/filter";
-import { localISOString } from "./component/filter-bar/date-filter/date-utils";
 import { LogList } from "./component/log-list";
 import { useLogEvents } from "./hook/use-log-events";
 
@@ -25,8 +25,12 @@ function getBoundaries(
 	}
 	if (date.operator === "between") {
 		return {
-			start: date.between.start ? new Date(Date.parse(date.between.start)) : null,
-			end: date.between.end ? new Date(Date.parse(date.between.end)) : appliedAt,
+			start: date.between.start
+				? new Date(Date.parse(date.between.start))
+				: null,
+			end: date.between.end
+				? new Date(Date.parse(date.between.end))
+				: appliedAt,
 		};
 	}
 	if (date.operator === "before" && date.before.value) {
@@ -89,7 +93,10 @@ function App() {
 	}, [logs, filter, isLive, dateAppliedAt]);
 
 	const boundaries = useMemo(
-		() => (isLive ? { start: null, end: null } : getBoundaries(filter, dateAppliedAt)),
+		() =>
+			isLive
+				? { start: null, end: null }
+				: getBoundaries(filter, dateAppliedAt),
 		[isLive, filter, dateAppliedAt],
 	);
 

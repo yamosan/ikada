@@ -70,7 +70,8 @@ function formatEpoch(ms: number): string {
 
 export function hasActiveDateFilter(filter: FilterDraft): boolean {
 	const { date } = filter;
-	if (date.operator === "between") return Boolean(date.between.start || date.between.end);
+	if (date.operator === "between")
+		return Boolean(date.between.start || date.between.end);
 	if (date.operator === "before") return Boolean(date.before.value);
 	return Boolean(date.after.value);
 }
@@ -91,7 +92,10 @@ export function isClosedPastWindow(filter: FilterDraft): boolean {
 	return false;
 }
 
-export function describeDateFilter(filter: FilterDraft, appliedAt: number): string {
+export function describeDateFilter(
+	filter: FilterDraft,
+	appliedAt: number,
+): string {
 	const { date } = filter;
 	const appliedAtStr = formatEpoch(appliedAt);
 
@@ -111,7 +115,10 @@ export function describeDateFilter(filter: FilterDraft, appliedAt: number): stri
 	return "Showing logs for a time range.";
 }
 
-export function describePausedBanner(filter: FilterDraft, dateAppliedAt: number): string {
+export function describePausedBanner(
+	filter: FilterDraft,
+	dateAppliedAt: number,
+): string {
 	if (hasActiveDateFilter(filter)) {
 		return describeDateFilter(filter, dateAppliedAt);
 	}

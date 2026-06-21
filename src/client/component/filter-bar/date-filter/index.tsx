@@ -46,7 +46,11 @@ export function DateFilter({
 				className={`relative z-10 flex ${isLive ? "rounded-md ring-1 ring-inset ring-teal-600/70" : ""}`}
 			>
 				{/* ── 左: 日付ピッカートリガー ── */}
-				<Tooltip.Root openDelay={400} closeDelay={0} disabled={filter.isOpen || isLive}>
+				<Tooltip.Root
+					openDelay={400}
+					closeDelay={0}
+					disabled={filter.isOpen || isLive}
+				>
 					<Tooltip.Trigger asChild>
 						<div
 							className={`relative z-10 rounded-l-md bg-zinc-950 transition-[color,box-shadow] ${triggerShellRingClass} ${triggerShellClass}`}
@@ -59,19 +63,31 @@ export function DateFilter({
 							>
 								<Clock
 									className={`h-3.5 w-3.5 shrink-0 transition-colors ${
-										isLive ? "text-zinc-500" : isActive ? "text-teal-400" : "text-zinc-500"
+										isLive
+											? "text-zinc-500"
+											: isActive
+												? "text-teal-400"
+												: "text-zinc-500"
 									}`}
 								/>
 								<span
 									className={`min-w-0 flex-1 truncate text-left ${
-										isLive ? "text-zinc-500" : isActive ? "text-teal-100" : "text-zinc-400"
+										isLive
+											? "text-zinc-500"
+											: isActive
+												? "text-teal-100"
+												: "text-zinc-400"
 									}`}
 								>
 									{isLive ? "Live" : filter.triggerDescription}
 								</span>
 								<ChevronDown
 									className={`h-3.5 w-3.5 shrink-0 transition-colors ${
-										isLive ? "text-zinc-600" : isActive ? "text-teal-400" : "text-zinc-500"
+										isLive
+											? "text-zinc-600"
+											: isActive
+												? "text-teal-400"
+												: "text-zinc-500"
 									}`}
 								/>
 							</Popover.Trigger>
@@ -98,9 +114,15 @@ export function DateFilter({
 					}`}
 				>
 					{isLive ? (
-						<Square className="h-3.5 w-3.5 shrink-0 fill-current" aria-hidden="true" />
+						<Square
+							className="h-3.5 w-3.5 shrink-0 fill-current"
+							aria-hidden="true"
+						/>
 					) : (
-						<Play className="h-3.5 w-3.5 shrink-0 fill-current" aria-hidden="true" />
+						<Play
+							className="h-3.5 w-3.5 shrink-0 fill-current"
+							aria-hidden="true"
+						/>
 					)}
 					LIVE
 				</button>
