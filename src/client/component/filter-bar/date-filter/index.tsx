@@ -8,7 +8,6 @@ import { useDateFilter } from "./use-date-filter";
 type DateFilterProps = {
 	draft: FilterDraft;
 	onDraftChange: (next: FilterDraft) => void;
-	onApply: () => void;
 	isLive: boolean;
 	onToggleLive: () => void;
 };
@@ -16,11 +15,10 @@ type DateFilterProps = {
 export function DateFilter({
 	draft,
 	onDraftChange,
-	onApply,
 	isLive,
 	onToggleLive,
 }: DateFilterProps) {
-	const filter = useDateFilter(draft, onDraftChange, onApply, () => {
+	const filter = useDateFilter(draft, onDraftChange, () => {
 		if (!isLive) onToggleLive();
 	});
 	const isActive = filter.canClear;
@@ -45,7 +43,6 @@ export function DateFilter({
 			<div
 				className={`relative z-10 flex ${isLive ? "rounded-md ring-1 ring-inset ring-teal-600/70" : ""}`}
 			>
-				{/* ── 左: 日付ピッカートリガー ── */}
 				<Tooltip.Root
 					openDelay={400}
 					closeDelay={0}
@@ -103,7 +100,6 @@ export function DateFilter({
 					</Portal>
 				</Tooltip.Root>
 
-				{/* ── 右: Live / Paused トグル ── */}
 				<button
 					type="button"
 					onClick={onToggleLive}
@@ -128,7 +124,6 @@ export function DateFilter({
 				</button>
 			</div>
 
-			{/* ── ポップオーバー（日付ピッカー） ── */}
 			<Portal>
 				<Popover.Positioner className="z-100">
 					<Popover.Content className="mt-1.5 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 focus:outline-none">

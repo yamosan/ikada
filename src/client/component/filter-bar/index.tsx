@@ -33,7 +33,6 @@ export function FilterBar({
 				<DateFilter
 					draft={filter}
 					onDraftChange={onFilterChange}
-					onApply={() => {}}
 					isLive={isLive}
 					onToggleLive={onToggleLive}
 				/>

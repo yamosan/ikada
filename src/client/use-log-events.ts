@@ -1,15 +1,6 @@
 import { createEventSource } from "eventsource-client";
 import { useEffect, useRef, useState } from "react";
-
-export type LogEvent = {
-	seq: number;
-	timestamp: number;
-	source: string;
-	stream: "stdout" | "stderr";
-	line: string;
-};
-
-export type ConnectionState = "connected" | "reconnecting";
+import type { ConnectionState, LogEvent } from "./log-event";
 
 function isValidLogEvent(candidate: unknown): candidate is LogEvent {
 	if (typeof candidate !== "object" || candidate === null) {

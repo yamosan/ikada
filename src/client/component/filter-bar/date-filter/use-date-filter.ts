@@ -13,8 +13,6 @@ import {
 	parseRelativeTimeMs,
 } from "./presets";
 
-// ─── Filter domain logic ───────────────────────────────────────────────────────
-
 function describeDraft(draft: FilterDraft): string {
 	const { date } = draft;
 	if (date.operator === "between") {
@@ -60,8 +58,6 @@ function checkIsDefault(draft: FilterDraft): boolean {
 	);
 }
 
-// ─── Hook ─────────────────────────────────────────────────────────────────────
-
 export type UseDateFilterReturn = {
 	isOpen: boolean;
 	setIsOpen: (open: boolean) => void;
@@ -93,7 +89,6 @@ export type UseDateFilterReturn = {
 export function useDateFilter(
 	confirmedDraft: FilterDraft,
 	onDraftChange: (next: FilterDraft) => void,
-	onApply: () => void,
 	onClear: () => void,
 ): UseDateFilterReturn {
 	const [isOpen, setIsOpen] = useState(false);
@@ -103,7 +98,6 @@ export function useDateFilter(
 
 	const handleSetIsOpen = (open: boolean) => {
 		if (open) {
-			// ポップオーバーを開くたびに確定済み状態に戻す
 			setLocalDraft(confirmedDraft);
 		}
 		setIsOpen(open);
@@ -123,10 +117,8 @@ export function useDateFilter(
 		[searchInput],
 	);
 
-	// プリセット・Apply・Clear のみ親に伝播する
 	const handlePresetSelect = (filter: FilterDraft, label: string) => {
 		onDraftChange({ ...confirmedDraft, date: filter.date });
-		onApply();
 		setActiveLabel(label);
 		setIsOpen(false);
 	};
@@ -139,7 +131,6 @@ export function useDateFilter(
 	const handleApply = () => {
 		if (checkApplyDisabled(localDraft)) return;
 		onDraftChange(localDraft);
-		onApply();
 		setActiveLabel(null);
 		setIsOpen(false);
 	};
@@ -150,7 +141,6 @@ export function useDateFilter(
 		setIsOpen(false);
 	};
 
-	// 以下はローカル draft のみ更新（未確定状態）
 	const handleOperatorChange = (operator: DateFilterOperator) => {
 		setLocalDraft({
 			...localDraft,

@@ -1,5 +1,8 @@
-import { DEFAULT_FILTER_DRAFT, type FilterDraft } from "../filter";
-import { localISOString } from "./date-utils";
+import {
+	createAfterDateFilter,
+	DEFAULT_FILTER_DRAFT,
+	type FilterDraft,
+} from "../filter";
 
 const SEC_MS = 1000;
 const MIN_MS = 60 * SEC_MS;
@@ -20,11 +23,7 @@ export type PresetGroup = {
 function buildAfterFilter(msAgo: number): FilterDraft {
 	return {
 		...DEFAULT_FILTER_DRAFT,
-		date: {
-			...DEFAULT_FILTER_DRAFT.date,
-			operator: "after",
-			after: { value: localISOString(new Date(Date.now() - msAgo)) },
-		},
+		date: createAfterDateFilter(new Date(), msAgo),
 	};
 }
 
