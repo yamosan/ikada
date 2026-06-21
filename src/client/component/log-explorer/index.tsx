@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { useBreakpoint } from "@/client/hook/use-breakpoint";
 import { LogDetailContent } from "../log-detail-content";
 import { LogList } from "../log-list";
 import { SidePanel } from "../side-panel";
@@ -10,6 +11,7 @@ const DETAIL_PANEL_MIN_SIZE = 20;
 export function LogExplorer() {
 	const { isPanelOpen, selectedEvent, closeSelectedLog } =
 		useLogExplorerState();
+	const isNarrowViewport = useBreakpoint("max-compact");
 
 	const handleOpenChange = (open: boolean) => {
 		if (!open) {
@@ -22,17 +24,18 @@ export function LogExplorer() {
 			<SidePanel.Root
 				open={isPanelOpen}
 				onOpenChange={handleOpenChange}
+				orientation={isNarrowViewport ? "vertical" : "horizontal"}
 				minMainSize={LIST_PANEL_MIN_SIZE}
 				minPanelSize={DETAIL_PANEL_MIN_SIZE}
-				className="min-w-120"
+				className="min-w-0 max-compact:flex-col compact:min-w-120"
 			>
 				<SidePanel.Main className="min-w-0">
 					<LogList />
 				</SidePanel.Main>
 
-				<SidePanel.ResizeTrigger className="group relative w-2 shrink-0 border-x border-zinc-700/80 bg-zinc-900/60 transition-colors hover:bg-teal-950/30" />
+				<SidePanel.ResizeTrigger className="group relative shrink-0 border-zinc-700/80 bg-zinc-900/60 transition-colors hover:bg-teal-950/30 max-compact:h-2 max-compact:border-y compact:w-2 compact:border-x" />
 
-				<SidePanel.Panel className="min-w-0 border-l border-zinc-700 bg-zinc-900">
+				<SidePanel.Panel className="min-w-0 border-zinc-700 bg-zinc-900 max-compact:border-t compact:border-l">
 					<div className="flex h-full min-h-0 flex-col">
 						<SidePanel.Header className="flex items-center justify-between border-b border-zinc-700 px-4 py-3">
 							<div className="flex items-baseline gap-2">

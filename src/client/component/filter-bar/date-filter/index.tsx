@@ -41,7 +41,7 @@ export function DateFilter({
 			positioning={{ placement: "bottom-start" }}
 		>
 			<div
-				className={`relative z-10 flex ${isLive ? "rounded-md ring-1 ring-inset ring-teal-600/70" : ""}`}
+				className={`relative z-10 flex shrink-0 ${isLive ? "rounded-md ring-1 ring-inset ring-teal-600/70" : ""}`}
 			>
 				<Tooltip.Root
 					openDelay={400}
@@ -126,7 +126,7 @@ export function DateFilter({
 
 			<Portal>
 				<Popover.Positioner className="z-100">
-					<Popover.Content className="mt-1.5 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 focus:outline-none">
+					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 focus:outline-none">
 						<div className="relative flex">
 							<PresetPanel
 								searchInput={filter.searchInput}

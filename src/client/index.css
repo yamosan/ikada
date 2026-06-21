@@ -4,6 +4,12 @@
 @theme {
 	--font-sans: "Inter Variable", sans-serif;
 
+	--breakpoint-*: initial;
+	/* Keep breakpoint values in sync with src/client/hook/use-breakpoint.ts. */
+	--breakpoint-compact: 580px;
+	--breakpoint-tablet: 768px;
+	--breakpoint-desktop: 1024px;
+
 	--color-*: initial;
 	--color-teal-100: oklch(95.3% 0.051 180.801);
 	--color-teal-200: oklch(91% 0.096 180.426);

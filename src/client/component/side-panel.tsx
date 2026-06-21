@@ -12,6 +12,7 @@ import {
 
 type SidePanelContextValue = {
 	isOpen: boolean;
+	orientation: "horizontal" | "vertical";
 	setOpen: (nextOpen: boolean) => void;
 };
 
@@ -32,6 +33,7 @@ function cx(...classes: Array<string | undefined>) {
 type SidePanelRootProps = {
 	children: ReactNode;
 	className?: string;
+	orientation?: "horizontal" | "vertical";
 	open?: boolean;
 	defaultOpen?: boolean;
 	onOpenChange?: (open: boolean) => void;
@@ -44,6 +46,7 @@ type SidePanelRootProps = {
 function Root({
 	children,
 	className,
+	orientation = "horizontal",
 	open,
 	defaultOpen = false,
 	onOpenChange,
@@ -79,7 +82,10 @@ function Root({
 		[isControlledOpen, onOpenChange],
 	);
 
-	const contextValue = useMemo(() => ({ isOpen, setOpen }), [isOpen, setOpen]);
+	const contextValue = useMemo(
+		() => ({ isOpen, orientation, setOpen }),
+		[isOpen, orientation, setOpen],
+	);
 	const resolvedSize =
 		isOpen && size.length === 1
 			? defaultSize
@@ -90,7 +96,7 @@ function Root({
 	return (
 		<SidePanelContext.Provider value={contextValue}>
 			<Splitter.Root
-				orientation="horizontal"
+				orientation={orientation}
 				panels={
 					isOpen
 						? [
@@ -125,13 +131,18 @@ function Main({ children, className }: SidePanelSlotProps) {
 }
 
 function ResizeTrigger({ className }: { className?: string }) {
-	const { isOpen } = useSidePanelContext();
+	const { isOpen, orientation } = useSidePanelContext();
 	if (!isOpen) {
 		return null;
 	}
+	const indicatorClassName =
+		orientation === "horizontal"
+			? "absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-zinc-500/70 group-hover:bg-teal-400/80"
+			: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-zinc-500/70 group-hover:bg-teal-400/80";
+
 	return (
 		<Splitter.ResizeTrigger id="main:panel" className={className}>
-			<Splitter.ResizeTriggerIndicator className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-zinc-500/70 group-hover:bg-teal-400/80" />
+			<Splitter.ResizeTriggerIndicator className={indicatorClassName} />
 		</Splitter.ResizeTrigger>
 	);
 }

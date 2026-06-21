@@ -9,7 +9,7 @@ export function TextSearch({ value, onChange }: TextSearchProps) {
 	const isActive = value !== "";
 
 	return (
-		<div className="relative flex min-w-0 flex-1 items-center">
+		<div className="relative order-first flex min-w-0 basis-full items-center compact:order-none compact:flex-1 compact:basis-auto">
 			<Search
 				className={`pointer-events-none absolute left-2.5 h-3.5 w-3.5 transition-colors ${
 					isActive ? "text-teal-400" : "text-zinc-500"

@@ -3,8 +3,8 @@ import { ArrowDown } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLogListState } from "./use-log-list-state";
 
-const LOG_ROW_GRID_CLASS =
-	"grid-cols-[3.5rem_10.5rem_fit-content(6rem)_minmax(0,1fr)]";
+const LOG_ROW_GRID_CLASS = "grid-cols-[3.5rem_10.5rem_4.5rem_minmax(0,1fr)]";
+const LOG_TABLE_MIN_WIDTH_CLASS = "min-w-[34rem]";
 const ROW_HEIGHT_PX = 32;
 const BOTTOM_THRESHOLD_PX = 4;
 
@@ -104,62 +104,68 @@ export function LogList() {
 	return (
 		<div className="relative h-full min-w-0">
 			<div className="flex h-full min-h-0 flex-col overflow-x-auto">
-				<div className="px-4">
-					<div
-						className={`grid ${LOG_ROW_GRID_CLASS} px-2 gap-x-3 border-b border-zinc-700/80 py-1 text-[11px] uppercase tracking-[0.04em] text-zinc-500`}
-					>
-						<span>seq</span>
-						<span>time</span>
-						<span>source</span>
-						<span>message</span>
-					</div>
-				</div>
-				{startBoundary && <BoundaryRow date={startBoundary} />}
 				<div
-					ref={scrollRef}
-					onScroll={syncAtBottomState}
-					className="min-h-0 flex-1 overflow-y-auto px-4"
+					className={`flex h-full min-h-0 flex-col ${LOG_TABLE_MIN_WIDTH_CLASS}`}
 				>
-					<div
-						className="relative border-y border-zinc-700/70 bg-zinc-900/35"
-						style={{ height: `${totalSize}px` }}
-					>
-						{virtualRows.map((virtualRow) => {
-							const event = logs[virtualRow.index];
-							if (!event) {
-								return null;
-							}
-							return (
-								<button
-									type="button"
-									key={event.seq}
-									className={`absolute left-0 top-0 grid w-full ${LOG_ROW_GRID_CLASS} cursor-pointer gap-x-3 border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs transition-colors outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-teal-400/50 ${
-										selectedSeq === event.seq
-											? "bg-teal-900/35 ring-1 ring-inset ring-teal-500/70 hover:bg-teal-800/45"
-											: "hover:bg-teal-950/20"
-									}`}
-									style={{
-										height: `${virtualRow.size}px`,
-										transform: `translateY(${virtualRow.start}px)`,
-									}}
-									onClick={() => selectLog(event.seq)}
-								>
-									<span className="whitespace-nowrap font-mono text-teal-300">
-										#{event.seq}
-									</span>
-									<span className="whitespace-nowrap font-mono text-zinc-400">
-										{formatTimestamp(event.timestamp)}
-									</span>
-									<span className="truncate text-zinc-400">{event.source}</span>
-									<span className="truncate text-zinc-200">
-										{event.line || "\u00a0"}
-									</span>
-								</button>
-							);
-						})}
+					<div className="px-4">
+						<div
+							className={`grid ${LOG_ROW_GRID_CLASS} px-2 gap-x-3 border-b border-zinc-700/80 py-1 text-[11px] uppercase tracking-[0.04em] text-zinc-500`}
+						>
+							<span>seq</span>
+							<span>time</span>
+							<span>source</span>
+							<span>message</span>
+						</div>
 					</div>
+					{startBoundary && <BoundaryRow date={startBoundary} />}
+					<div
+						ref={scrollRef}
+						onScroll={syncAtBottomState}
+						className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-4"
+					>
+						<div
+							className="relative border-y border-zinc-700/70 bg-zinc-900/35"
+							style={{ height: `${totalSize}px` }}
+						>
+							{virtualRows.map((virtualRow) => {
+								const event = logs[virtualRow.index];
+								if (!event) {
+									return null;
+								}
+								return (
+									<button
+										type="button"
+										key={event.seq}
+										className={`absolute left-0 top-0 grid w-full ${LOG_ROW_GRID_CLASS} cursor-pointer gap-x-3 border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs transition-colors outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-teal-400/50 ${
+											selectedSeq === event.seq
+												? "bg-teal-900/35 ring-1 ring-inset ring-teal-500/70 hover:bg-teal-800/45"
+												: "hover:bg-teal-950/20"
+										}`}
+										style={{
+											height: `${virtualRow.size}px`,
+											transform: `translateY(${virtualRow.start}px)`,
+										}}
+										onClick={() => selectLog(event.seq)}
+									>
+										<span className="whitespace-nowrap font-mono text-teal-300">
+											#{event.seq}
+										</span>
+										<span className="whitespace-nowrap font-mono text-zinc-400">
+											{formatTimestamp(event.timestamp)}
+										</span>
+										<span className="truncate text-zinc-400">
+											{event.source}
+										</span>
+										<span className="truncate text-zinc-200">
+											{event.line || "\u00a0"}
+										</span>
+									</button>
+								);
+							})}
+						</div>
+					</div>
+					{endBoundary && <BoundaryRow date={endBoundary} />}
 				</div>
-				{endBoundary && <BoundaryRow date={endBoundary} />}
 			</div>
 			{logs.length > 0 && !isAtBottom ? (
 				<button
