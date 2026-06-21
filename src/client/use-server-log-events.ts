@@ -38,7 +38,7 @@ function parseEventBatch(raw: string): LogEvent[] {
 	}
 }
 
-export function useSubscribeServerLogEvents({
+export function useServerLogEvents({
 	onConnected,
 	onReconnecting,
 	onSnapshot,
