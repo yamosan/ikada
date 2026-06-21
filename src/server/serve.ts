@@ -7,7 +7,8 @@ import { sValidator } from "@hono/standard-validator";
 import { Hono } from "hono";
 import { streamSSE } from "hono/streaming";
 import * as v from "valibot";
-import { InMemoryLogStore, type LogEvent } from "./log-store.js";
+import type { LogEvent } from "../type.js";
+import { InMemoryLogStore } from "./log-store.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

@@ -1,4 +1,4 @@
-import type { LogEvent } from "../../log-event";
+import type { LogEvent } from "../../../type";
 
 export type DateFilterOperator = "between" | "before" | "after";
 
