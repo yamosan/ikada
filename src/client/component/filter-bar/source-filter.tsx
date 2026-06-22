@@ -1,5 +1,6 @@
 import { Popover, Portal } from "@ark-ui/react";
 import { ChevronDown, Tag } from "lucide-react";
+import { useState } from "react";
 
 type SourceFilterProps = {
 	availableSources: string[];
@@ -12,7 +13,9 @@ export function SourceFilter({
 	value,
 	onChange,
 }: SourceFilterProps) {
+	const [isOpen, setIsOpen] = useState(false);
 	const isActive = value.length > 0;
+	const isHighlighted = isActive || isOpen;
 	const label =
 		value.length === 0
 			? "All logs"
@@ -29,12 +32,18 @@ export function SourceFilter({
 	};
 
 	return (
-		<Popover.Root positioning={{ placement: "bottom-start" }}>
+		<Popover.Root
+			open={isOpen}
+			onOpenChange={(details) => setIsOpen(details.open)}
+			positioning={{ placement: "bottom-start" }}
+		>
 			<Popover.Trigger
-				className={`flex h-9 w-40 shrink-0 items-center gap-2 rounded-md border bg-zinc-950 px-3 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-teal-600/70 ${
-					isActive
-						? "border-teal-600/70 text-teal-100 hover:border-teal-500"
-						: "border-zinc-700 text-zinc-400 hover:border-zinc-600"
+				className={`flex h-9 w-40 shrink-0 items-center gap-2 rounded-md bg-zinc-950 px-3 text-sm ring-inset transition-[color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600/70 ${
+					isOpen ? "ring-2" : "ring-1"
+				} ${
+					isHighlighted
+						? `${isActive ? "text-teal-100" : "text-zinc-400"} ring-teal-600/70`
+						: "text-zinc-400 ring-zinc-700 hover:ring-zinc-600"
 				}`}
 			>
 				<Tag

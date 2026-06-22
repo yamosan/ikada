@@ -32,7 +32,7 @@ export function DateFilter({
 
 	const triggerShellRingClass = isLive
 		? ""
-		: "ring-1 ring-inset focus-within:ring-2 focus-within:ring-teal-600/70";
+		: `${filter.isOpen ? "ring-2" : "ring-1 focus-within:ring-2"} ring-inset focus-within:ring-teal-600/70`;
 
 	return (
 		<Popover.Root

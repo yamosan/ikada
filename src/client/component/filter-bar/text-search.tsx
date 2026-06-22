@@ -19,10 +19,10 @@ export function TextSearch({ value, onChange }: TextSearchProps) {
 				type="text"
 				value={value}
 				placeholder="Search"
-				className={`h-9 w-full rounded-md border bg-zinc-950 pl-8 pr-3 text-sm transition-colors focus:outline-none focus:border-teal-600 focus:text-zinc-100 ${
+				className={`h-9 w-full rounded-md bg-zinc-950 pl-8 pr-3 text-sm ring-1 ring-inset transition-[color,box-shadow] focus:outline-none focus:ring-2 focus:ring-teal-600/70 focus:text-zinc-100 ${
 					isActive
-						? "border-teal-600/70 text-zinc-100 placeholder-zinc-500 hover:border-teal-500"
-						: "border-zinc-700 text-zinc-400 placeholder-zinc-600 hover:border-zinc-600"
+						? "text-zinc-100 placeholder-zinc-500 ring-teal-600/70"
+						: "text-zinc-400 placeholder-zinc-600 ring-zinc-700 hover:ring-zinc-600"
 				}`}
 				onChange={(e) => onChange(e.target.value)}
 			/>
