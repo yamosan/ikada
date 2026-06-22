@@ -1,7 +1,8 @@
-import { Popover, Portal, Tooltip } from "@ark-ui/react";
+import { Popover, Portal, Swap, Tooltip } from "@ark-ui/react";
 import { ChevronDown, Clock, Play, Square } from "lucide-react";
 import type { FilterDraft } from "@/client/types/filter";
 import { DateForm } from "./date-form";
+import styles from "./index.module.css";
 import { PresetPanel } from "./preset-panel";
 import { useDateFilter } from "./use-date-filter";
 
@@ -109,17 +110,23 @@ export function DateFilter({
 							: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-zinc-200"
 					}`}
 				>
-					{isLive ? (
-						<Square
-							className="h-3.5 w-3.5 shrink-0 fill-current"
-							aria-hidden="true"
-						/>
-					) : (
-						<Play
-							className="h-3.5 w-3.5 shrink-0 fill-current"
-							aria-hidden="true"
-						/>
-					)}
+					<Swap.Root
+						swap={isLive}
+						className="grid h-3.5 w-3.5 shrink-0 place-items-center"
+					>
+						<Swap.Indicator
+							type="on"
+							className={`${styles.liveModeIcon} col-start-1 row-start-1 flex h-3.5 w-3.5 items-center justify-center`}
+						>
+							<Square className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
+						</Swap.Indicator>
+						<Swap.Indicator
+							type="off"
+							className={`${styles.liveModeIcon} col-start-1 row-start-1 flex h-3.5 w-3.5 items-center justify-center`}
+						>
+							<Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
+						</Swap.Indicator>
+					</Swap.Root>
 					LIVE
 				</button>
 			</div>
