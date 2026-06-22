@@ -63,7 +63,7 @@ export function DateForm({
 								</Select.Indicator>
 							</Select.Trigger>
 						</Select.Control>
-						<Select.Positioner className="z-110">
+						<Select.Positioner style={{ zIndex: 110 }}>
 							<Select.Content className="mt-1 min-w-(--reference-width) overflow-hidden rounded border border-zinc-700 bg-zinc-900 p-1 shadow-lg shadow-black/40">
 								{OPERATOR_OPTIONS.map((item) => (
 									<Select.Item

@@ -125,7 +125,7 @@ export function DateFilter({
 			</div>
 
 			<Portal>
-				<Popover.Positioner className="z-100">
+				<Popover.Positioner style={{ zIndex: 100 }}>
 					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 focus:outline-none">
 						<div className="relative flex">
 							<PresetPanel
