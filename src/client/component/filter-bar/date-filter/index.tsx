@@ -101,34 +101,43 @@ export function DateFilter({
 					</Portal>
 				</Tooltip.Root>
 
-				<button
-					type="button"
-					onClick={onToggleLive}
-					className={`flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide transition-colors ${
-						isLive
-							? "border-0 bg-teal-900/50 text-teal-300 hover:bg-teal-800/60"
-							: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-zinc-200"
+				<div
+					className={`rounded-r-md ring-inset transition-[box-shadow] focus-within:ring-2 focus-within:ring-teal-600/70 ${
+						isLive ? "" : "ring-1 ring-zinc-700 hover:ring-zinc-600"
 					}`}
 				>
-					<Swap.Root
-						swap={isLive}
-						className="grid h-3.5 w-3.5 shrink-0 place-items-center"
+					<button
+						type="button"
+						onClick={onToggleLive}
+						className={`flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide transition-colors focus-visible:outline-none ${
+							isLive
+								? "border-0 bg-teal-900/50 text-teal-300 hover:bg-teal-800/60"
+								: "border-0 bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+						}`}
 					>
-						<Swap.Indicator
-							type="on"
-							className={`${styles.liveModeIcon} col-start-1 row-start-1 flex h-3.5 w-3.5 items-center justify-center`}
+						<Swap.Root
+							swap={isLive}
+							className="grid h-3.5 w-3.5 shrink-0 place-items-center"
 						>
-							<Square className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
-						</Swap.Indicator>
-						<Swap.Indicator
-							type="off"
-							className={`${styles.liveModeIcon} col-start-1 row-start-1 flex h-3.5 w-3.5 items-center justify-center`}
-						>
-							<Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
-						</Swap.Indicator>
-					</Swap.Root>
-					LIVE
-				</button>
+							<Swap.Indicator
+								type="on"
+								className={`${styles.liveModeIcon} col-start-1 row-start-1 flex h-3.5 w-3.5 items-center justify-center`}
+							>
+								<Square
+									className="h-3.5 w-3.5 fill-current"
+									aria-hidden="true"
+								/>
+							</Swap.Indicator>
+							<Swap.Indicator
+								type="off"
+								className={`${styles.liveModeIcon} col-start-1 row-start-1 flex h-3.5 w-3.5 items-center justify-center`}
+							>
+								<Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
+							</Swap.Indicator>
+						</Swap.Root>
+						LIVE
+					</button>
+				</div>
 			</div>
 
 			<Portal>
