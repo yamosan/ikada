@@ -1,5 +1,5 @@
 import { createListCollection, Portal, Select } from "@ark-ui/react";
-import { ChevronDown, Tag } from "lucide-react";
+import { Check, ChevronDown, Tag } from "lucide-react";
 import { useMemo, useState } from "react";
 
 type SourceFilterProps = {
@@ -101,9 +101,12 @@ export function SourceFilter({
 										item={source}
 										className="group flex w-full cursor-pointer items-center gap-2.5 px-3 py-1.5 text-left text-sm transition-colors data-highlighted:bg-zinc-800"
 									>
-										<span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border border-zinc-600 bg-transparent text-[9px] leading-none group-data-[state=checked]:border-teal-500 group-data-[state=checked]:bg-teal-500 group-data-[state=checked]:text-zinc-900">
+										<span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border border-zinc-600 bg-transparent group-data-[state=checked]:border-teal-500 group-data-[state=checked]:bg-teal-500">
 											<Select.ItemIndicator className="hidden data-[state=checked]:block">
-												✓
+												<Check
+													className="h-2.5 w-2.5 text-zinc-50"
+													strokeWidth={2.75}
+												/>
 											</Select.ItemIndicator>
 										</span>
 										<Select.ItemText className="truncate text-zinc-300 data-[state=checked]:text-teal-100">
