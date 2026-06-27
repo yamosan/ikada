@@ -27,6 +27,7 @@
 		"@hono/standard-validator": "^0.2.2",
 		"@internationalized/date": "^3.12.2",
 		"@tanstack/react-virtual": "^3.14.2",
+		"clsx": "^2.1.1",
 		"commander": "^15.0.0",
 		"eventsource-client": "^1.2.0",
 		"hono": "^4.12.25",
