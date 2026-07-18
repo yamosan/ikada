@@ -42,7 +42,7 @@ function ToolbarButton({
 	return (
 		<button
 			type="button"
-			className="inline-flex min-h-[1.6rem] cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-zinc-600 bg-zinc-800 px-[0.55rem] py-[0.2rem] text-[0.688rem] font-medium leading-[1.4] text-zinc-300 transition-colors duration-100 ease-out hover:border-teal-700/70 hover:bg-teal-950/25 hover:text-teal-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-teal-300/60"
+			className="inline-flex min-h-[1.6rem] cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-zinc-600 bg-zinc-800 px-[0.55rem] py-[0.2rem] text-[0.688rem] font-medium leading-[1.4] text-zinc-300 transition-colors duration-100 ease-out hover:border-teal-700/70 hover:bg-teal-950/25 hover:text-teal-100"
 			onClick={onClick}
 		>
 			{children}

@@ -20,7 +20,6 @@ export function SourceFilter({
 }: SourceFilterProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const isActive = value.length > 0;
-	const isHighlighted = isActive || isOpen;
 	const collection = useMemo(
 		() =>
 			createListCollection({
@@ -62,25 +61,23 @@ export function SourceFilter({
 		>
 			<Select.Control>
 				<Select.Trigger
-					className={`flex h-9 w-40 shrink-0 items-center gap-2 rounded-md bg-zinc-950 px-3 text-sm ring-inset transition-[color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600/70 ${
-						isOpen ? "ring-2" : "ring-1"
-					} ${
-						isHighlighted
-							? `${isActive ? "text-teal-100" : "text-zinc-400"} ring-teal-600/70`
-							: "text-zinc-400 ring-zinc-700 hover:ring-zinc-600"
-					}`}
+					className={`flex h-9 w-40 shrink-0 items-center gap-2 rounded-md bg-zinc-950 border border-zinc-700 px-3 text-sm transition-[color,box-shadow]`}
 				>
 					<Tag
 						className={`h-3.5 w-3.5 shrink-0 transition-colors ${
 							isActive ? "text-teal-400" : "text-zinc-500"
 						}`}
 					/>
-					<span className="min-w-0 flex-1 truncate text-left">{label}</span>
+					<span
+						className={`min-w-0 flex-1 truncate text-left ${
+							isActive ? "text-zinc-100" : "text-zinc-500"
+						}`}
+					>
+						{label}
+					</span>
 					<Select.Indicator>
 						<ChevronDown
-							className={`h-3.5 w-3.5 shrink-0 transition-colors ${
-								isActive ? "text-teal-400" : "text-zinc-500"
-							}`}
+							className={`h-3.5 w-3.5 shrink-0 transition-colors text-zinc-500`}
 						/>
 					</Select.Indicator>
 				</Select.Trigger>
@@ -88,7 +85,7 @@ export function SourceFilter({
 
 			<Portal>
 				<Select.Positioner style={{ zIndex: 100 }}>
-					<Select.Content className="mt-1 w-52 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 focus:outline-none">
+					<Select.Content className="mt-1 w-52 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60">
 						{availableSources.length === 0 ? (
 							<p className="px-3 py-2.5 text-xs text-zinc-500">
 								No sources available
@@ -103,10 +100,7 @@ export function SourceFilter({
 									>
 										<span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border border-zinc-600 bg-transparent group-data-[state=checked]:border-teal-500 group-data-[state=checked]:bg-teal-500">
 											<Select.ItemIndicator className="hidden data-[state=checked]:block">
-												<Check
-													className="h-2.5 w-2.5 text-zinc-50"
-													strokeWidth={2.75}
-												/>
+												<Check className="h-3 w-3 stroke-3 stroke-white" />
 											</Select.ItemIndicator>
 										</span>
 										<Select.ItemText className="truncate text-zinc-300 data-[state=checked]:text-teal-100">

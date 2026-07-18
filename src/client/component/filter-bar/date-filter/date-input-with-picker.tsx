@@ -4,7 +4,7 @@ import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 import { toCalendarDateTime } from "./date-utils";
 
 const SEGMENT_CLASS =
-	"rounded px-px text-zinc-100 outline-none data-placeholder-shown:text-zinc-400 data-[type=literal]:min-w-0 data-[type=literal]:select-none data-[type=literal]:px-0 data-[type=literal]:text-zinc-400 focus:bg-teal-800 focus:text-zinc-50";
+	"rounded px-px text-zinc-100 data-placeholder-shown:text-zinc-400 data-[type=literal]:min-w-0 data-[type=literal]:select-none data-[type=literal]:px-0 data-[type=literal]:text-zinc-400";
 
 type DateInputWithPickerProps = {
 	value: DateValue | undefined;
@@ -51,7 +51,7 @@ export function DateInputWithPicker({
 					hourCycle={24}
 					className="min-w-0 flex-1"
 				>
-					<DateInput.SegmentGroup className="flex h-8 w-full items-center rounded border border-zinc-700 bg-zinc-950 px-2.5 text-sm focus-within:border-teal-600">
+					<DateInput.SegmentGroup className="flex h-8 w-full items-center rounded bg-zinc-950 px-2.5 text-sm ring-1 ring-inset ring-zinc-700 transition-[box-shadow]">
 						<DateInput.Context>
 							{(api) => {
 								const segmentCounts = new Map<string, number>();
@@ -77,7 +77,7 @@ export function DateInputWithPicker({
 
 				<DatePicker.Trigger
 					type="button"
-					className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-zinc-700 bg-zinc-950 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
+					className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-zinc-700 bg-zinc-950 text-zinc-400 transition-[color,background-color,box-shadow] hover:bg-zinc-800 hover:text-zinc-200"
 				>
 					<CalendarDays className="h-4 w-4" />
 				</DatePicker.Trigger>
@@ -86,7 +86,7 @@ export function DateInputWithPicker({
 			<Portal>
 				<DatePicker.Positioner>
 					{/* relative z-200: Zag.js reads getComputedStyle(content).zIndex to set --z-index on the positioner */}
-					<DatePicker.Content className="relative z-200 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 p-3 shadow-xl shadow-black/60 focus:outline-none">
+					<DatePicker.Content className="relative z-200 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 p-3 shadow-xl shadow-black/60">
 						<DatePicker.View view="day">
 							<DatePicker.Context>
 								{(picker) => (
@@ -94,19 +94,19 @@ export function DateInputWithPicker({
 										<DatePicker.ViewControl className="flex items-center justify-between gap-2">
 											<DatePicker.PrevTrigger
 												type="button"
-												className="inline-flex h-7 w-7 items-center justify-center rounded border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+												className="inline-flex h-7 w-7 items-center justify-center rounded border border-zinc-700 text-zinc-300 transition-[background-color,box-shadow] hover:bg-zinc-800"
 											>
 												<ChevronLeft className="h-4 w-4" aria-hidden="true" />
 											</DatePicker.PrevTrigger>
 											<DatePicker.ViewTrigger
 												type="button"
-												className="rounded px-2 py-1 text-sm text-zinc-100 hover:bg-zinc-800"
+												className="rounded px-2 py-1 text-sm text-zinc-100 transition-[background-color,box-shadow] hover:bg-zinc-800"
 											>
 												<DatePicker.RangeText />
 											</DatePicker.ViewTrigger>
 											<DatePicker.NextTrigger
 												type="button"
-												className="inline-flex h-7 w-7 items-center justify-center rounded border border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+												className="inline-flex h-7 w-7 items-center justify-center rounded border border-zinc-700 text-zinc-300 transition-[background-color,box-shadow] hover:bg-zinc-800"
 											>
 												<ChevronRight className="h-4 w-4" aria-hidden="true" />
 											</DatePicker.NextTrigger>
@@ -136,7 +136,7 @@ export function DateInputWithPicker({
 																value={day}
 																className="p-0.5"
 															>
-																<DatePicker.TableCellTrigger className="flex h-8 w-8 items-center justify-center rounded text-sm text-zinc-200 outline-none data-in-range:bg-teal-950/60 data-outside-range:text-zinc-600 data-selected:bg-teal-700 data-selected:text-zinc-50 data-today:ring-1 data-today:ring-teal-600">
+																<DatePicker.TableCellTrigger className="flex h-8 w-8 items-center justify-center rounded text-sm text-zinc-200 transition-[color,background-color,box-shadow] data-in-range:bg-teal-950/60 data-outside-range:text-zinc-600 data-selected:bg-teal-700 data-selected:text-zinc-50 data-today:ring-1 data-today:ring-teal-600">
 																	{day.day}
 																</DatePicker.TableCellTrigger>
 															</DatePicker.TableCell>

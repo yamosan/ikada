@@ -23,17 +23,6 @@ export function DateFilter({
 		if (!isLive) onToggleLive();
 	});
 	const isActive = filter.canClear;
-	const isTriggerHighlighted = !isLive && (isActive || filter.isOpen);
-
-	const triggerShellClass = isLive
-		? "opacity-40"
-		: isTriggerHighlighted
-			? "ring-teal-600/70"
-			: "ring-zinc-700 hover:ring-zinc-600";
-
-	const triggerShellRingClass = isLive
-		? ""
-		: `${filter.isOpen ? "ring-2" : "ring-1 focus-within:ring-2"} ring-inset focus-within:ring-teal-600/70`;
 
 	return (
 		<Popover.Root
@@ -41,23 +30,17 @@ export function DateFilter({
 			onOpenChange={(details) => filter.setIsOpen(details.open)}
 			positioning={{ placement: "bottom-start" }}
 		>
-			<div
-				className={`relative z-10 flex shrink-0 ${isLive ? "rounded-md ring-1 ring-inset ring-teal-600/70" : ""}`}
-			>
+			<div className={`relative z-10 flex shrink-0`}>
 				<Tooltip.Root
 					openDelay={400}
 					closeDelay={0}
 					disabled={filter.isOpen || isLive}
 				>
 					<Tooltip.Trigger asChild>
-						<div
-							className={`relative z-10 rounded-l-md bg-zinc-950 transition-[color,box-shadow] ${triggerShellRingClass} ${triggerShellClass}`}
-						>
+						<div className={`relative`}>
 							<Popover.Trigger
 								disabled={isLive}
-								className={`flex h-9 w-52 items-center gap-2 rounded-l-md border-0 bg-transparent px-3 text-sm transition-colors focus-visible:outline-none ${
-									isLive ? "cursor-not-allowed" : ""
-								}`}
+								className={`relative bg-zinc-950 flex h-9 w-52 items-center gap-2 rounded-l-md border border-zinc-700 px-3 text-sm`}
 							>
 								<Clock
 									className={`h-3.5 w-3.5 shrink-0 transition-colors ${
@@ -79,15 +62,7 @@ export function DateFilter({
 								>
 									{isLive ? "Live" : filter.triggerDescription}
 								</span>
-								<ChevronDown
-									className={`h-3.5 w-3.5 shrink-0 transition-colors ${
-										isLive
-											? "text-zinc-600"
-											: isActive
-												? "text-teal-400"
-												: "text-zinc-500"
-									}`}
-								/>
+								<ChevronDown className={`h-3.5 w-3.5 shrink-0 text-zinc-500`} />
 							</Popover.Trigger>
 						</div>
 					</Tooltip.Trigger>
@@ -101,18 +76,14 @@ export function DateFilter({
 					</Portal>
 				</Tooltip.Root>
 
-				<div
-					className={`rounded-r-md ring-inset transition-[box-shadow] focus-within:ring-2 focus-within:ring-teal-600/70 ${
-						isLive ? "" : "ring-1 ring-zinc-700 hover:ring-zinc-600"
-					}`}
-				>
+				<div>
 					<button
 						type="button"
 						onClick={onToggleLive}
-						className={`flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide transition-colors focus-visible:outline-none ${
+						className={`flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide ${
 							isLive
-								? "border-0 bg-teal-900/50 text-teal-300 hover:bg-teal-800/60"
-								: "border-0 bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+								? "border border-l-0 border-zinc-700 bg-teal-900/50 text-teal-300"
+								: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400"
 						}`}
 					>
 						<Swap.Root
@@ -142,7 +113,7 @@ export function DateFilter({
 
 			<Portal>
 				<Popover.Positioner style={{ zIndex: 100 }}>
-					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 focus:outline-none">
+					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60">
 						<div className="relative flex">
 							<PresetPanel
 								searchInput={filter.searchInput}
