@@ -65,7 +65,7 @@ export function SourceFilter({
 				>
 					<Tag
 						className={`h-3.5 w-3.5 shrink-0 transition-colors ${
-							isActive ? "text-amber-400" : "text-zinc-500"
+							isActive ? "text-teal-400" : "text-zinc-500"
 						}`}
 					/>
 					<span
@@ -98,12 +98,12 @@ export function SourceFilter({
 										item={source}
 										className="group flex w-full cursor-pointer items-center gap-2.5 px-3 py-1.5 text-left text-sm transition-colors data-highlighted:bg-zinc-800"
 									>
-										<span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border border-zinc-600 bg-transparent group-data-[state=checked]:border-amber-500 group-data-[state=checked]:bg-amber-500">
+										<span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border border-zinc-600 bg-transparent group-data-[state=checked]:border-teal-500 group-data-[state=checked]:bg-teal-500">
 											<Select.ItemIndicator className="hidden data-[state=checked]:block">
 												<Check className="h-3 w-3 stroke-3 stroke-white" />
 											</Select.ItemIndicator>
 										</span>
-										<Select.ItemText className="truncate text-zinc-300 data-[state=checked]:text-amber-100">
+										<Select.ItemText className="truncate text-zinc-300 data-[state=checked]:text-teal-100">
 											{source.label}
 										</Select.ItemText>
 									</Select.Item>

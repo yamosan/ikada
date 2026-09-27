@@ -49,7 +49,7 @@ export function DateFilter({
 										isLive
 											? "text-zinc-500"
 											: isActive
-												? "text-amber-400"
+												? "text-teal-400"
 												: "text-zinc-500"
 									}`}
 								/>
@@ -58,7 +58,7 @@ export function DateFilter({
 										isLive
 											? "text-zinc-500"
 											: isActive
-												? "text-amber-100"
+												? "text-teal-100"
 												: "text-zinc-400"
 									}`}
 								>
@@ -84,7 +84,7 @@ export function DateFilter({
 						onClick={onToggleLive}
 						className={`relative flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide outline-none transition-[color,background-color,box-shadow] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/50 ${
 							isLive
-								? "border border-l-0 border-zinc-700 bg-amber-900/50 text-amber-300"
+								? "border border-l-0 border-zinc-700 bg-teal-900/50 text-teal-300"
 								: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400"
 						}`}
 					>

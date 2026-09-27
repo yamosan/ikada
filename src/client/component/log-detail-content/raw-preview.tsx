@@ -15,7 +15,7 @@ export function RawPreview({ line }: RawPreviewProps) {
 								<Clipboard.Trigger asChild>
 									<button
 										type="button"
-										className="inline-flex min-h-[1.6rem] cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-zinc-600 bg-zinc-800 px-[0.55rem] py-[0.2rem] text-[0.688rem] font-medium leading-[1.4] text-zinc-300 outline-none transition-[color,background-color,border-color,box-shadow] duration-100 ease-out hover:border-amber-700/70 hover:bg-amber-950/25 hover:text-amber-100 focus-visible:ring-2 focus-visible:ring-ring/50"
+										className="inline-flex min-h-[1.6rem] cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-zinc-600 bg-zinc-800 px-[0.55rem] py-[0.2rem] text-[0.688rem] font-medium leading-[1.4] text-zinc-300 outline-none transition-[color,background-color,border-color,box-shadow] duration-100 ease-out hover:border-teal-700/70 hover:bg-teal-950/25 hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-ring/50"
 									>
 										{clipboard.copied ? "Copied" : "Copy Raw"}
 									</button>
