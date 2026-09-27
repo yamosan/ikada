@@ -36,7 +36,7 @@ export function SourceFilter({
 	);
 	const label =
 		value.length === 0
-			? "All logs"
+			? "All sources"
 			: value.length === 1
 				? value[0]
 				: `${value.length} sources`;

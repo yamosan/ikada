@@ -178,7 +178,7 @@ export function LogList() {
 							ref={scrollRef}
 							aria-label="Logs"
 							onScroll={syncAtBottomState}
-							className="col-span-full grid min-h-0 grid-cols-subgrid content-start overflow-y-auto overflow-x-hidden border-y border-gray-700/70 bg-gray-900/35 px-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+							className="col-span-full grid min-h-0 grid-cols-subgrid content-start overflow-y-auto overflow-x-hidden border-y border-gray-700/70 bg-gray-900/35 px-4 outline-none"
 						>
 							{topSpacerHeight > 0 && (
 								<div
@@ -198,11 +198,11 @@ export function LogList() {
 										className={`relative col-span-full grid w-full grid-cols-subgrid cursor-pointer border-b border-gray-700/70 px-2 py-1.5 text-left text-xs outline-none transition-[color,background-color,box-shadow] data-highlighted:z-10 data-highlighted:ring-2 data-highlighted:ring-ring/50 ${
 											selectedSeq === event.seq
 												? "bg-primary-900/35 ring-1 ring-inset ring-primary-500/70 hover:bg-primary-800/45"
-												: "hover:bg-primary-950/20"
+												: "hover:bg-gray-800/40"
 										}`}
 										style={{ height: `${virtualRow.size}px` }}
 									>
-										<span className="whitespace-nowrap font-mono text-primary-300">
+										<span className="whitespace-nowrap font-mono text-gray-300">
 											#{event.seq}
 										</span>
 										<span className="whitespace-nowrap font-mono text-gray-400">
@@ -237,7 +237,7 @@ export function LogList() {
 				<button
 					type="button"
 					aria-label="Jump to latest"
-					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-primary-700/80 bg-gray-900 text-primary-200 shadow-sm outline-none transition-[color,background-color,box-shadow] hover:bg-primary-800 focus-visible:ring-2 focus-visible:ring-ring/50"
+					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-gray-700/80 bg-gray-900 text-gray-400 shadow-lg shadow-black/40 outline-none transition-[color,background-color,border-color,box-shadow] hover:border-gray-600 hover:bg-gray-800 hover:text-gray-200 focus-visible:ring-2 focus-visible:ring-ring/50"
 					onClick={handleJumpToLatest}
 				>
 					<ArrowDown className="h-4 w-4" aria-hidden="true" />
