@@ -1,6 +1,7 @@
+import { createListCollection, Listbox } from "@ark-ui/react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { ArrowDown } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLogListState } from "./use-log-list-state";
 
 const ROW_HEIGHT_PX = 32;
@@ -45,8 +46,19 @@ export function LogList() {
 		useLogListState();
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [isAtBottom, setIsAtBottom] = useState(true);
+	const [highlightedValue, setHighlightedValue] = useState<string | null>(null);
 	const isAtBottomRef = useRef(true);
 	const prevLogCountRef = useRef(logs.length);
+	const collection = useMemo(
+		() =>
+			createListCollection({
+				items: logs,
+				itemToString: (item) => item.line,
+				itemToValue: (item) => String(item.seq),
+			}),
+		[logs],
+	);
+	const selectedValue = selectedSeq === null ? [] : [String(selectedSeq)];
 
 	const syncAtBottomState = useCallback(() => {
 		const scrollElement = scrollRef.current;
@@ -98,6 +110,21 @@ export function LogList() {
 		});
 	}, [logs.length, rowVirtualizer]);
 
+	useEffect(() => {
+		setHighlightedValue((currentValue) => {
+			if (currentValue && collection.has(currentValue)) {
+				return currentValue;
+			}
+
+			const selectedValue = selectedSeq === null ? null : String(selectedSeq);
+			if (selectedValue && collection.has(selectedValue)) {
+				return selectedValue;
+			}
+
+			return collection.lastValue ?? null;
+		});
+	}, [collection, selectedSeq]);
+
 	const virtualRows = rowVirtualizer.getVirtualItems();
 	const totalSize = rowVirtualizer.getTotalSize();
 	const firstVirtualRow = virtualRows[0];
@@ -123,54 +150,81 @@ export function LogList() {
 							className="col-span-full row-start-2"
 						/>
 					)}
-					<div
-						ref={scrollRef}
-						onScroll={syncAtBottomState}
-						className="col-span-full row-start-3 grid min-h-0 grid-cols-subgrid content-start overflow-y-auto overflow-x-hidden border-y border-zinc-700/70 bg-zinc-900/35 px-4"
-					>
-						{topSpacerHeight > 0 && (
-							<div
-								className="col-span-full"
-								style={{ height: `${topSpacerHeight}px` }}
-							/>
-						)}
-						{virtualRows.map((virtualRow) => {
-							const event = logs[virtualRow.index];
-							if (!event) {
-								return null;
+					<Listbox.Root
+						collection={collection}
+						selectionMode="single"
+						selectOnHighlight
+						typeahead={false}
+						value={selectedValue}
+						highlightedValue={highlightedValue}
+						onHighlightChange={(details) =>
+							setHighlightedValue(details.highlightedValue)
+						}
+						onValueChange={(details) => {
+							const nextValue = details.value[0];
+							if (nextValue) {
+								selectLog(Number(nextValue));
 							}
-							return (
-								<button
-									type="button"
-									key={event.seq}
-									className={`col-span-full grid w-full grid-cols-subgrid cursor-pointer border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs transition-colors outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-teal-400/50 ${
-										selectedSeq === event.seq
-											? "bg-teal-900/35 ring-1 ring-inset ring-teal-500/70 hover:bg-teal-800/45"
-											: "hover:bg-teal-950/20"
-									}`}
-									style={{ height: `${virtualRow.size}px` }}
-									onClick={() => selectLog(event.seq)}
-								>
-									<span className="whitespace-nowrap font-mono text-teal-300">
-										#{event.seq}
-									</span>
-									<span className="whitespace-nowrap font-mono text-zinc-400">
-										{formatTimestamp(event.timestamp)}
-									</span>
-									<span className="truncate text-zinc-400">{event.source}</span>
-									<span className="truncate text-zinc-200">
-										{event.line || "\u00a0"}
-									</span>
-								</button>
-							);
-						})}
-						{bottomSpacerHeight > 0 && (
-							<div
-								className="col-span-full"
-								style={{ height: `${bottomSpacerHeight}px` }}
-							/>
-						)}
-					</div>
+						}}
+						scrollToIndexFn={({ index }) => {
+							rowVirtualizer.scrollToIndex(index, {
+								align: "auto",
+								behavior: "auto",
+							});
+						}}
+						className="col-span-full row-start-3 grid min-h-0 grid-cols-subgrid"
+					>
+						<Listbox.Content
+							ref={scrollRef}
+							aria-label="Logs"
+							onScroll={syncAtBottomState}
+							className="col-span-full grid min-h-0 grid-cols-subgrid content-start overflow-y-auto overflow-x-hidden border-y border-zinc-700/70 bg-zinc-900/35 px-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+						>
+							{topSpacerHeight > 0 && (
+								<div
+									className="col-span-full"
+									style={{ height: `${topSpacerHeight}px` }}
+								/>
+							)}
+							{virtualRows.map((virtualRow) => {
+								const event = logs[virtualRow.index];
+								if (!event) {
+									return null;
+								}
+								return (
+									<Listbox.Item
+										key={event.seq}
+										item={event}
+										className={`relative col-span-full grid w-full grid-cols-subgrid cursor-pointer border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs outline-none transition-[color,background-color,box-shadow] data-highlighted:z-10 data-highlighted:ring-2 data-highlighted:ring-ring/50 ${
+											selectedSeq === event.seq
+												? "bg-teal-900/35 ring-1 ring-inset ring-teal-500/70 hover:bg-teal-800/45"
+												: "hover:bg-teal-950/20"
+										}`}
+										style={{ height: `${virtualRow.size}px` }}
+									>
+										<span className="whitespace-nowrap font-mono text-teal-300">
+											#{event.seq}
+										</span>
+										<span className="whitespace-nowrap font-mono text-zinc-400">
+											{formatTimestamp(event.timestamp)}
+										</span>
+										<span className="truncate text-zinc-400">
+											{event.source}
+										</span>
+										<span className="truncate text-zinc-200">
+											{event.line || "\u00a0"}
+										</span>
+									</Listbox.Item>
+								);
+							})}
+							{bottomSpacerHeight > 0 && (
+								<div
+									className="col-span-full"
+									style={{ height: `${bottomSpacerHeight}px` }}
+								/>
+							)}
+						</Listbox.Content>
+					</Listbox.Root>
 					{endBoundary && (
 						<BoundaryRow
 							date={endBoundary}
@@ -183,7 +237,7 @@ export function LogList() {
 				<button
 					type="button"
 					aria-label="Jump to latest"
-					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-teal-700/80 bg-zinc-900 text-teal-200 shadow-sm transition-colors hover:bg-teal-800"
+					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-teal-700/80 bg-zinc-900 text-teal-200 shadow-sm outline-none transition-[color,background-color,box-shadow] hover:bg-teal-800 focus-visible:ring-2 focus-visible:ring-ring/50"
 					onClick={handleJumpToLatest}
 				>
 					<ArrowDown className="h-4 w-4" aria-hidden="true" />
