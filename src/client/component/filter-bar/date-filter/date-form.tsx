@@ -56,7 +56,7 @@ export function DateForm({
 						}}
 					>
 						<Select.Control>
-							<Select.Trigger className="flex h-8 w-full items-center justify-between rounded bg-zinc-950 px-3 text-sm text-zinc-100 ring-1 ring-inset ring-zinc-700 transition-[color,box-shadow] data-[state=open]:ring-2 data-[state=open]:ring-teal-600/70">
+							<Select.Trigger className="flex h-8 w-full items-center justify-between rounded border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 outline-none transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:ring-2 data-[state=open]:ring-ring/50">
 								<Select.ValueText placeholder="Select condition" />
 								<Select.Indicator>
 									<ChevronDown className="h-4 w-4 text-zinc-400" />
@@ -64,7 +64,7 @@ export function DateForm({
 							</Select.Trigger>
 						</Select.Control>
 						<Select.Positioner style={{ zIndex: 110 }}>
-							<Select.Content className="mt-1 min-w-(--reference-width) overflow-hidden rounded border border-zinc-700 bg-zinc-900 p-1 shadow-lg shadow-black/40">
+							<Select.Content className="mt-1 min-w-(--reference-width) overflow-hidden rounded border border-zinc-700 bg-zinc-900 p-1 shadow-lg shadow-black/40 outline-none">
 								{OPERATOR_OPTIONS.map((item) => (
 									<Select.Item
 										key={item.value}
@@ -126,7 +126,7 @@ export function DateForm({
 					type="button"
 					onClick={onClear}
 					disabled={!canClear}
-					className="h-7 rounded border border-zinc-700 bg-transparent px-4 text-xs text-zinc-400 transition-[color,border-color,box-shadow] hover:border-zinc-500 hover:text-zinc-200 disabled:cursor-not-allowed disabled:opacity-30"
+					className="h-7 rounded border border-zinc-700 bg-transparent px-4 text-xs text-zinc-400 outline-none transition-[color,border-color,box-shadow] hover:border-zinc-500 hover:text-zinc-200 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-30"
 				>
 					Clear
 				</button>
@@ -134,7 +134,7 @@ export function DateForm({
 					type="button"
 					onClick={onApply}
 					disabled={applyDisabled}
-					className="h-7 rounded border border-teal-700/90 bg-teal-900/60 px-4 text-xs text-teal-100 transition-[color,background-color,border-color,box-shadow] hover:bg-teal-800/80 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-400"
+					className="h-7 rounded border border-teal-700/90 bg-teal-900/60 px-4 text-xs text-teal-100 outline-none transition-[color,background-color,border-color,box-shadow] hover:bg-teal-800/80 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-400"
 				>
 					Apply
 				</button>

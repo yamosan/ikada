@@ -61,7 +61,7 @@ export function SourceFilter({
 		>
 			<Select.Control>
 				<Select.Trigger
-					className={`flex h-9 w-40 shrink-0 items-center gap-2 rounded-md bg-zinc-950 border border-zinc-700 px-3 text-sm transition-[color,box-shadow]`}
+					className={`flex h-9 w-40 shrink-0 items-center gap-2 rounded-md bg-zinc-950 border border-zinc-700 px-3 text-sm outline-none transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:ring-2 data-[state=open]:ring-ring/50`}
 				>
 					<Tag
 						className={`h-3.5 w-3.5 shrink-0 transition-colors ${
@@ -85,7 +85,7 @@ export function SourceFilter({
 
 			<Portal>
 				<Select.Positioner style={{ zIndex: 100 }}>
-					<Select.Content className="mt-1 w-52 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60">
+					<Select.Content className="mt-1 w-52 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 outline-none">
 						{availableSources.length === 0 ? (
 							<p className="px-3 py-2.5 text-xs text-zinc-500">
 								No sources available

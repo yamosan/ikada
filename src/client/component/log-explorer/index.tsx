@@ -33,7 +33,7 @@ export function LogExplorer() {
 					<LogList />
 				</SidePanel.Main>
 
-				<SidePanel.ResizeTrigger className="group relative shrink-0 border-zinc-700/80 bg-zinc-900/60 transition-colors hover:bg-teal-950/30 max-compact:h-2 max-compact:border-y compact:w-2 compact:border-x" />
+				<SidePanel.ResizeTrigger className="group relative shrink-0 border-zinc-700/80 bg-zinc-900/60 outline-none transition-[background-color,box-shadow] hover:bg-teal-950/30 focus-visible:ring-2 focus-visible:ring-ring/50 data-[focus]:ring-2 data-[focus]:ring-ring/50 data-[dragging]:ring-2 data-[dragging]:ring-ring/50 max-compact:h-2 max-compact:border-y compact:w-2 compact:border-x" />
 
 				<SidePanel.Panel className="min-w-0 border-zinc-700 bg-zinc-900 max-compact:border-t compact:border-l">
 					<div className="flex h-full min-h-0 flex-col">
@@ -50,7 +50,7 @@ export function LogExplorer() {
 									</>
 								)}
 							</div>
-							<SidePanel.CloseTrigger className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-200">
+							<SidePanel.CloseTrigger className="rounded-md p-1 text-zinc-400 outline-none transition-[color,background-color,box-shadow] hover:bg-zinc-800 hover:text-zinc-200 focus-visible:ring-2 focus-visible:ring-ring/50">
 								<X className="h-4 w-4" aria-hidden="true" />
 							</SidePanel.CloseTrigger>
 						</SidePanel.Header>

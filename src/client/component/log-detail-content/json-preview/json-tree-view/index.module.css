@@ -40,6 +40,7 @@
 	display: flex;
 	padding-inline-start: calc((var(--depth) - 1) * var(--tree-indent-step));
 	user-select: none;
+	outline: none;
 }
 
 .root :global([data-part="branch-control"][data-depth="1"]) {
@@ -48,6 +49,10 @@
 
 .root :global([data-part="branch-control"]:hover) {
 	background: rgb(30 41 59 / 0.45);
+}
+
+.root :global([data-part="branch-control"]:focus-visible) {
+	box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-ring) 50%, transparent);
 }
 
 .root :global([data-part="branch-indicator"]) {
@@ -71,6 +76,7 @@
 		((var(--depth) - 1) * var(--tree-indent-step)) +
 		var(--tree-item-offset)
 	);
+	outline: none;
 }
 
 .root :global([data-part="item"][data-depth="1"]) {
@@ -79,6 +85,10 @@
 
 .root :global([data-part="item"]:hover) {
 	background: rgb(30 41 59 / 0.45);
+}
+
+.root :global([data-part="item"]:focus-visible) {
+	box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-ring) 50%, transparent);
 }
 
 .root :global([data-part="item-text"]),

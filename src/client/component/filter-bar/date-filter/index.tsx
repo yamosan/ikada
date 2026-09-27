@@ -40,7 +40,9 @@ export function DateFilter({
 						<div className={`relative`}>
 							<Popover.Trigger
 								disabled={isLive}
-								className={`relative bg-zinc-950 flex h-9 w-52 items-center gap-2 rounded-l-md border border-zinc-700 px-3 text-sm`}
+								className={`relative bg-zinc-950 flex h-9 w-52 items-center gap-2 rounded-l-md border border-zinc-700 px-3 text-sm outline-none transition-[color,box-shadow] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:z-20 data-[state=open]:ring-2 data-[state=open]:ring-ring/50 ${
+									isLive ? "cursor-not-allowed" : ""
+								}`}
 							>
 								<Clock
 									className={`h-3.5 w-3.5 shrink-0 transition-colors ${
@@ -80,7 +82,7 @@ export function DateFilter({
 					<button
 						type="button"
 						onClick={onToggleLive}
-						className={`flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide ${
+						className={`relative flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide outline-none transition-[color,background-color,box-shadow] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/50 ${
 							isLive
 								? "border border-l-0 border-zinc-700 bg-teal-900/50 text-teal-300"
 								: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400"
@@ -113,7 +115,7 @@ export function DateFilter({
 
 			<Portal>
 				<Popover.Positioner style={{ zIndex: 100 }}>
-					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60">
+					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 outline-none">
 						<div className="relative flex">
 							<PresetPanel
 								searchInput={filter.searchInput}

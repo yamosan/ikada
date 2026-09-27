@@ -106,11 +106,11 @@ export function PresetPanel({
 					value={searchInput}
 					onChange={(e) => onSearchChange(e.target.value)}
 					placeholder="e.g. 30s, 2h, 7d"
-					className="h-7 w-full rounded bg-zinc-950 px-2 text-xs text-zinc-100 ring-1 ring-inset ring-zinc-700 placeholder:text-zinc-600 transition-[color,box-shadow]"
+					className="h-7 w-full rounded border border-zinc-700 bg-zinc-950 px-2 text-xs text-zinc-100 outline-none placeholder:text-zinc-600 transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50"
 				/>
 			</div>
 
-			<Listbox.Content className="flex-1 overflow-y-auto px-1.5 py-1.5">
+			<Listbox.Content className="flex-1 overflow-y-auto px-1.5 py-1.5 outline-none">
 				{dynamicPreset && (
 					<>
 						<Listbox.Item
