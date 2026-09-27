@@ -6,18 +6,22 @@
 </h1>
 
 <p align="center">
-  A local web UI for exploring line-based logs from the command line.
+  English | <a href="./README.ja.md">日本語</a>
 </p>
 
-**ikada** reads logs from `stdin`, streams them to a browser over SSE, and makes them easy to search, filter, and inspect without sending data to an external service.
+**ikada** is a local log viewer that brings together logs from multiple commands and processes, with search and filtering. It also displays structured JSON logs in a readable format. Your logs are never sent to an external service.
 
 ## Quick Start
 
 ```bash
-pnpm install
-pnpm build
+npx ikada
+```
 
-echo '{"level":"info","message":"hello"}' | node dist/cli/index.js
+Install globally:
+
+```bash
+npm install -g ikada
+some_command | ikada
 ```
 
 ikada starts a local server, opens the browser, and continues ingesting each line received from `stdin`.
@@ -52,16 +56,6 @@ Send logs to the running server from another process:
 some_command | ikada ingest --source worker
 ```
 
-### Local build
-
-Until ikada is published as a package, invoke the built CLI directly or link it globally:
-
-```bash
-node dist/cli/index.js --help
-pnpm link --global
-ikada --help
-```
-
 ## CLI Options
 
 | Option | Default | Description |
@@ -70,45 +64,6 @@ ikada --help
 | `--port <number>` | `3030` | Server listen port |
 | `--no-open` | `false` | Do not open the browser automatically |
 | `--source <name>` | `stdin` | Label attached to ingested logs |
-
-## HTTP API
-
-### Ingest a log line
-
-```http
-POST /api/ingest
-```
-
-```json
-{
-  "line": "message",
-  "source": "stdin",
-  "stream": "stdout"
-}
-```
-
-The response contains the assigned sequence number:
-
-```json
-{
-  "ok": true,
-  "seq": 1
-}
-```
-
-### Stream log events
-
-```http
-POST /api/events
-```
-
-```json
-{
-  "sinceSeq": 1
-}
-```
-
-The SSE stream emits `snapshot` and `append` events containing `LogEvent[]` payloads.
 
 ## Development
 
