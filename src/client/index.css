@@ -1,8 +1,8 @@
 @import "tailwindcss";
-@import "@fontsource-variable/inter";
 
 @theme {
-	--font-sans: "Inter Variable", sans-serif;
+	--font-sans:
+		system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
 	--breakpoint-*: initial;
 	/* Keep breakpoint values in sync with src/client/hook/use-breakpoint.ts. */
@@ -47,7 +47,7 @@
 	}
 
 	body {
-		font-family: "Inter Variable", sans-serif;
+		font-family: var(--font-sans);
 	}
 
 	:root {

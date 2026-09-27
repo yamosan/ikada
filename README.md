@@ -130,3 +130,7 @@ pnpm build
 
 - Node.js 20 or later
 - pnpm
+
+## License
+
+MIT
