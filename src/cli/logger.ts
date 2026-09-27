@@ -1,4 +1,4 @@
-const PREFIX = "[nenrin]";
+const PREFIX = "[ikada]";
 
 export const logger = {
 	info: (...args: unknown[]) => console.log(PREFIX, ...args),

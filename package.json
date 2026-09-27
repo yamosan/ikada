@@ -1,11 +1,11 @@
 {
-	"name": "nenrin",
+	"name": "ikada",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"packageManager": "pnpm@11.8.0",
 	"bin": {
-		"nenrin": "./dist/cli/index.js"
+		"ikada": "./dist/cli/index.js"
 	},
 	"scripts": {
 		"prepare": "lefthook install",

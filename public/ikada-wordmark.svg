@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 100" width="990" height="300">
+  <title>Ikada</title>
+  <rect x="14" y="22" width="64" height="11" rx="5.5" fill="#A8642E"/>
+  <rect x="14" y="38" width="72" height="11" rx="5.5" fill="#C98A4B"/>
+  <rect x="14" y="54" width="52" height="11" rx="5.5" fill="#A8642E"/>
+  <rect x="14" y="70" width="66" height="11" rx="5.5" fill="#C98A4B"/>
+  <rect x="28" y="16" width="6" height="71" rx="3" fill="#16252B"/>
+  <g fill="none" stroke="#16252B" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M122 44V76"/>
+    <path d="M144 22V76M168 44L150 60L168 76"/>
+    <circle cx="200" cy="60" r="16"/><path d="M216 44V76"/>
+    <circle cx="248" cy="60" r="16"/><path d="M264 22V76"/>
+    <circle cx="296" cy="60" r="16"/><path d="M312 44V76"/>
+  </g>
+  <circle cx="122" cy="24" r="6.5" fill="#A8642E"/>
+</svg>

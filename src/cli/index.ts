@@ -52,7 +52,7 @@ function startServerWithBrowser(
 
 const program = new Command();
 program
-	.name("nenrin")
+	.name("ikada")
 	.description("Local JSON log viewer")
 	.option("--host <host>", "Host to listen on", "127.0.0.1")
 	.option("--port <number>", "Port to listen on", "3030")
@@ -92,7 +92,7 @@ program
 		const hasPipedInput = !process.stdin.isTTY;
 		if (!hasPipedInput) {
 			command.error(
-				"No piped input detected. Usage: cat logs.json | nenrin ingest",
+				"No piped input detected. Usage: cat logs.json | ikada ingest",
 			);
 		}
 		const runtime = resolveRuntimeOptions(command);

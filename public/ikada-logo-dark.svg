@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <title>Ikada</title>
+  <rect x="14" y="22" width="64" height="11" rx="5.5" fill="#D08A4E"/>
+  <rect x="14" y="38" width="72" height="11" rx="5.5" fill="#E2A86C"/>
+  <rect x="14" y="54" width="52" height="11" rx="5.5" fill="#D08A4E"/>
+  <rect x="14" y="70" width="66" height="11" rx="5.5" fill="#E2A86C"/>
+  <rect x="28" y="16" width="6" height="71" rx="3" fill="#E6EEEE"/>
+</svg>
