@@ -197,12 +197,12 @@ export function LogList() {
 										item={event}
 										className={`relative col-span-full grid w-full grid-cols-subgrid cursor-pointer border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs outline-none transition-[color,background-color,box-shadow] data-highlighted:z-10 data-highlighted:ring-2 data-highlighted:ring-ring/50 ${
 											selectedSeq === event.seq
-												? "bg-ikada-900/35 ring-1 ring-inset ring-ikada-500/70 hover:bg-ikada-800/45"
-												: "hover:bg-ikada-950/20"
+												? "bg-primary-900/35 ring-1 ring-inset ring-primary-500/70 hover:bg-primary-800/45"
+												: "hover:bg-primary-950/20"
 										}`}
 										style={{ height: `${virtualRow.size}px` }}
 									>
-										<span className="whitespace-nowrap font-mono text-ikada-300">
+										<span className="whitespace-nowrap font-mono text-primary-300">
 											#{event.seq}
 										</span>
 										<span className="whitespace-nowrap font-mono text-zinc-400">
@@ -237,7 +237,7 @@ export function LogList() {
 				<button
 					type="button"
 					aria-label="Jump to latest"
-					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-ikada-700/80 bg-zinc-900 text-ikada-200 shadow-sm outline-none transition-[color,background-color,box-shadow] hover:bg-ikada-800 focus-visible:ring-2 focus-visible:ring-ring/50"
+					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-primary-700/80 bg-zinc-900 text-primary-200 shadow-sm outline-none transition-[color,background-color,box-shadow] hover:bg-primary-800 focus-visible:ring-2 focus-visible:ring-ring/50"
 					onClick={handleJumpToLatest}
 				>
 					<ArrowDown className="h-4 w-4" aria-hidden="true" />

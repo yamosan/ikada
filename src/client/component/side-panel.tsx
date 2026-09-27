@@ -137,8 +137,8 @@ function ResizeTrigger({ className }: { className?: string }) {
 	}
 	const indicatorClassName =
 		orientation === "horizontal"
-			? "absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-zinc-500/70 transition-colors group-hover:bg-ikada-400/80 group-data-[focus]:bg-ikada-400/80 group-data-[dragging]:bg-ikada-400/80"
-			: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-zinc-500/70 transition-colors group-hover:bg-ikada-400/80 group-data-[focus]:bg-ikada-400/80 group-data-[dragging]:bg-ikada-400/80";
+			? "absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-zinc-500/70 transition-colors group-hover:bg-primary-400/80 group-data-[focus]:bg-primary-400/80 group-data-[dragging]:bg-primary-400/80"
+			: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-zinc-500/70 transition-colors group-hover:bg-primary-400/80 group-data-[focus]:bg-primary-400/80 group-data-[dragging]:bg-primary-400/80";
 
 	return (
 		<Splitter.ResizeTrigger id="main:panel" className={className}>

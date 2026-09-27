@@ -116,7 +116,7 @@ export function PresetPanel({
 						<Listbox.Item
 							item={getPresetOption("dynamic")}
 							highlightOnHover
-							className="flex w-full cursor-pointer items-center gap-1.5 rounded px-2 py-1.5 text-left text-sm text-ikada-300 hover:bg-zinc-800 data-highlighted:bg-zinc-800"
+							className="flex w-full cursor-pointer items-center gap-1.5 rounded px-2 py-1.5 text-left text-sm text-zinc-300 hover:bg-zinc-800 data-highlighted:bg-zinc-800"
 						>
 							<Clock className="h-3.5 w-3.5 shrink-0" />
 							{dynamicPreset.label}
@@ -137,7 +137,7 @@ export function PresetPanel({
 								key={preset.label}
 								item={getPresetOption(`${group.group}:${preset.label}`)}
 								highlightOnHover
-								className="w-full cursor-pointer rounded px-2 py-1.5 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-ikada-300 data-highlighted:bg-zinc-800 data-highlighted:text-ikada-300"
+								className="w-full cursor-pointer rounded px-2 py-1.5 text-left text-sm text-zinc-300 hover:bg-zinc-800 data-highlighted:bg-zinc-800"
 							>
 								{preset.label}
 							</Listbox.Item>

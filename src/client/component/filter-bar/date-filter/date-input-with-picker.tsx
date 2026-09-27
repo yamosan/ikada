@@ -15,7 +15,7 @@ import {
 } from "./time-column";
 
 const SEGMENT_CLASS =
-	"rounded px-px text-zinc-100 outline-none data-placeholder-shown:text-zinc-400 data-[type=literal]:min-w-0 data-[type=literal]:select-none data-[type=literal]:px-0 data-[type=literal]:text-zinc-400 focus-visible:bg-ikada-800 focus-visible:text-zinc-50";
+	"rounded px-px text-zinc-100 outline-none data-placeholder-shown:text-zinc-400 data-[type=literal]:min-w-0 data-[type=literal]:select-none data-[type=literal]:px-0 data-[type=literal]:text-zinc-400 focus-visible:bg-primary-800 focus-visible:text-zinc-50";
 
 function focusTimeColumn(ref: RefObject<HTMLDivElement | null>) {
 	ref.current?.querySelector<HTMLElement>('[role="listbox"]')?.focus();
@@ -198,7 +198,7 @@ export function DateInputWithPicker({
 																	value={day}
 																	className="p-0.5"
 																>
-																	<DatePicker.TableCellTrigger className="flex h-8 w-8 items-center justify-center rounded text-sm text-zinc-200 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 data-in-range:bg-ikada-950/60 data-outside-range:text-zinc-600 data-selected:bg-ikada-700 data-selected:text-zinc-50 data-today:ring-1 data-today:ring-ikada-600 [&:hover:not([data-in-range]):not([data-selected])]:bg-zinc-800">
+																	<DatePicker.TableCellTrigger className="flex h-8 w-8 items-center justify-center rounded text-sm text-zinc-200 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 data-in-range:bg-primary-950/60 data-outside-range:text-zinc-600 data-selected:bg-primary-700 data-selected:text-zinc-50 data-today:ring-1 data-today:ring-primary-600 [&:hover:not([data-in-range]):not([data-selected])]:bg-zinc-800">
 																		{day.day}
 																	</DatePicker.TableCellTrigger>
 																</DatePicker.TableCell>

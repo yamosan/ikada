@@ -49,7 +49,7 @@ export function DateFilter({
 										isLive
 											? "text-zinc-500"
 											: isActive
-												? "text-ikada-400"
+												? "text-primary-400"
 												: "text-zinc-500"
 									}`}
 								/>
@@ -58,7 +58,7 @@ export function DateFilter({
 										isLive
 											? "text-zinc-500"
 											: isActive
-												? "text-ikada-100"
+												? "text-primary-100"
 												: "text-zinc-400"
 									}`}
 								>
@@ -82,9 +82,10 @@ export function DateFilter({
 					<button
 						type="button"
 						onClick={onToggleLive}
+						aria-pressed={isLive}
 						className={`relative flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide outline-none transition-[color,background-color,box-shadow] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/50 ${
 							isLive
-								? "border border-l-0 border-zinc-700 bg-ikada-900/50 text-ikada-300"
+								? "border border-l-0 border-primary-600 bg-primary-600 text-white shadow-sm shadow-primary-600/20 hover:bg-primary-500"
 								: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400"
 						}`}
 					>
