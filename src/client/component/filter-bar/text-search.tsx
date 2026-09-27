@@ -12,7 +12,7 @@ export function TextSearch({ value, onChange }: TextSearchProps) {
 		<div className="relative order-first flex min-w-0 basis-full items-center compact:order-0 compact:flex-1 compact:basis-auto">
 			<Search
 				className={`pointer-events-none absolute left-2.5 h-3.5 w-3.5 transition-colors ${
-					isActive ? "text-teal-400" : "text-zinc-500"
+					isActive ? "text-ikada-400" : "text-zinc-500"
 				}`}
 			/>
 			<input

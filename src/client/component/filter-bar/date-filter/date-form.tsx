@@ -73,7 +73,7 @@ export function DateForm({
 									>
 										<Select.ItemText>{item.label}</Select.ItemText>
 										<Select.ItemIndicator>
-											<Check className="h-3.5 w-3.5 text-teal-300" />
+											<Check className="h-3.5 w-3.5 text-ikada-300" />
 										</Select.ItemIndicator>
 									</Select.Item>
 								))}
@@ -134,7 +134,7 @@ export function DateForm({
 					type="button"
 					onClick={onApply}
 					disabled={applyDisabled}
-					className="h-7 rounded border border-teal-700/90 bg-teal-900/60 px-4 text-xs text-teal-100 outline-none transition-[color,background-color,border-color,box-shadow] hover:bg-teal-800/80 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-400"
+					className="h-7 rounded border border-ikada-700/90 bg-ikada-900/60 px-4 text-xs text-ikada-100 outline-none transition-[color,background-color,border-color,box-shadow] hover:bg-ikada-800/80 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-400"
 				>
 					Apply
 				</button>
