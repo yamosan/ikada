@@ -11,6 +11,10 @@
 
 **ikada**は、複数のコマンドやプロセスから流れるログをローカル上で集約し、検索・フィルタリングできるログビューアーです。JSON形式の構造化ログも読みやすく表示します。ログが外部サービスへ送信されることはありません。
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/yamosan/ikada/main/docs/assets/preview.png" alt="構造化ログを表示・絞り込みしているikadaの画面" width="1280">
+</p>
+
 ## クイックスタート
 
 ```bash

@@ -11,6 +11,10 @@
 
 **ikada** is a local log viewer that brings together logs from multiple commands and processes, with search and filtering. It also displays structured JSON logs in a readable format. Your logs are never sent to an external service.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/yamosan/ikada/main/docs/assets/preview.png" alt="ikada displaying and filtering structured logs" width="1280">
+</p>
+
 ## Quick Start
 
 ```bash
