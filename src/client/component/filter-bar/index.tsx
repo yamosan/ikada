@@ -16,7 +16,7 @@ export function FilterBar() {
 	} = useFilterBarState();
 
 	return (
-		<section className="border-b border-zinc-700 bg-zinc-900/60 px-3 py-2">
+		<section className="border-b border-gray-700 bg-gray-900/60 px-3 py-2">
 			<div className="flex flex-wrap items-center gap-1.5">
 				<SourceFilter
 					availableSources={availableSources}

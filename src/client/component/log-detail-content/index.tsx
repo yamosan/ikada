@@ -33,18 +33,18 @@ export function LogDetailContent() {
 	return (
 		<div key={event.seq} className="space-y-3">
 			<div className="grid grid-cols-[5rem_1fr] gap-x-3 gap-y-1 text-xs">
-				<span className="text-zinc-500">seq</span>
-				<span className="text-zinc-200">#{event.seq}</span>
-				<span className="text-zinc-500">time</span>
-				<span className="text-zinc-200">
+				<span className="text-gray-500">seq</span>
+				<span className="text-gray-200">#{event.seq}</span>
+				<span className="text-gray-500">time</span>
+				<span className="text-gray-200">
 					{formatTimestamp(event.timestamp)}
 				</span>
-				<span className="text-zinc-500">source</span>
-				<span className="text-zinc-200">{event.source}</span>
-				<span className="text-zinc-500">stream</span>
-				<span className="text-zinc-200">{event.stream}</span>
+				<span className="text-gray-500">source</span>
+				<span className="text-gray-200">{event.source}</span>
+				<span className="text-gray-500">stream</span>
+				<span className="text-gray-200">{event.stream}</span>
 			</div>
-			<div className="min-w-0 overflow-x-auto rounded-md border border-zinc-700 bg-zinc-950/70 p-3">
+			<div className="min-w-0 overflow-x-auto rounded-md border border-gray-700 bg-gray-950/70 p-3">
 				{content.type === "json" ? (
 					<JsonPreview data={content.data} line={content.line} />
 				) : (

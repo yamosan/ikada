@@ -117,13 +117,13 @@ export function TimeColumn({
 				onKeyUp={(event) => {
 					if (event.key === "Enter") onAdvance?.();
 				}}
-				className={`${styles.timeColumnScrollbar} min-h-0 flex-1 snap-y overflow-y-auto p-1 outline-none ${isKeyboardFocused ? "bg-zinc-800/40" : ""}`}
+				className={`${styles.timeColumnScrollbar} min-h-0 flex-1 snap-y overflow-y-auto p-1 outline-none ${isKeyboardFocused ? "bg-gray-800/40" : ""}`}
 			>
 				{collection.items.map((item) => (
 					<Listbox.Item
 						key={item.value}
 						item={item}
-						className="flex h-8 snap-center cursor-pointer items-center justify-center rounded text-sm text-zinc-300 outline-none data-highlighted:bg-primary-700 data-highlighted:text-zinc-50 data-selected:bg-primary-700 data-selected:text-zinc-50 [&:hover:not([data-highlighted]):not([data-selected])]:bg-zinc-800"
+						className="flex h-8 snap-center cursor-pointer items-center justify-center rounded text-sm text-gray-300 outline-none data-highlighted:bg-primary-700 data-highlighted:text-gray-50 data-selected:bg-primary-700 data-selected:text-gray-50 [&:hover:not([data-highlighted]):not([data-selected])]:bg-gray-800"
 					>
 						<Listbox.ItemText>{item.label}</Listbox.ItemText>
 					</Listbox.Item>

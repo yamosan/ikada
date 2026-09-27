@@ -138,7 +138,7 @@ export function LogList() {
 		<div className="relative h-full min-w-0">
 			<div className="flex h-full min-h-0 flex-col overflow-x-auto">
 				<div className="grid h-full min-h-0 min-w-136 grid-cols-[3.5rem_10.5rem_fit-content(6rem)_minmax(0,1fr)] grid-rows-[auto_auto_minmax(0,1fr)_auto] gap-x-4">
-					<div className="col-span-full row-start-1 grid grid-cols-subgrid border-b border-zinc-700/80 px-6 py-1 text-[11px] uppercase tracking-[0.04em] text-zinc-500">
+					<div className="col-span-full row-start-1 grid grid-cols-subgrid border-b border-gray-700/80 px-6 py-1 text-[11px] uppercase tracking-[0.04em] text-gray-500">
 						<span>seq</span>
 						<span>time</span>
 						<span>source</span>
@@ -178,7 +178,7 @@ export function LogList() {
 							ref={scrollRef}
 							aria-label="Logs"
 							onScroll={syncAtBottomState}
-							className="col-span-full grid min-h-0 grid-cols-subgrid content-start overflow-y-auto overflow-x-hidden border-y border-zinc-700/70 bg-zinc-900/35 px-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+							className="col-span-full grid min-h-0 grid-cols-subgrid content-start overflow-y-auto overflow-x-hidden border-y border-gray-700/70 bg-gray-900/35 px-4 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
 						>
 							{topSpacerHeight > 0 && (
 								<div
@@ -195,7 +195,7 @@ export function LogList() {
 									<Listbox.Item
 										key={event.seq}
 										item={event}
-										className={`relative col-span-full grid w-full grid-cols-subgrid cursor-pointer border-b border-zinc-700/70 px-2 py-1.5 text-left text-xs outline-none transition-[color,background-color,box-shadow] data-highlighted:z-10 data-highlighted:ring-2 data-highlighted:ring-ring/50 ${
+										className={`relative col-span-full grid w-full grid-cols-subgrid cursor-pointer border-b border-gray-700/70 px-2 py-1.5 text-left text-xs outline-none transition-[color,background-color,box-shadow] data-highlighted:z-10 data-highlighted:ring-2 data-highlighted:ring-ring/50 ${
 											selectedSeq === event.seq
 												? "bg-primary-900/35 ring-1 ring-inset ring-primary-500/70 hover:bg-primary-800/45"
 												: "hover:bg-primary-950/20"
@@ -205,13 +205,13 @@ export function LogList() {
 										<span className="whitespace-nowrap font-mono text-primary-300">
 											#{event.seq}
 										</span>
-										<span className="whitespace-nowrap font-mono text-zinc-400">
+										<span className="whitespace-nowrap font-mono text-gray-400">
 											{formatTimestamp(event.timestamp)}
 										</span>
-										<span className="truncate text-zinc-400">
+										<span className="truncate text-gray-400">
 											{event.source}
 										</span>
-										<span className="truncate text-zinc-200">
+										<span className="truncate text-gray-200">
 											{event.line || "\u00a0"}
 										</span>
 									</Listbox.Item>
@@ -237,7 +237,7 @@ export function LogList() {
 				<button
 					type="button"
 					aria-label="Jump to latest"
-					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-primary-700/80 bg-zinc-900 text-primary-200 shadow-sm outline-none transition-[color,background-color,box-shadow] hover:bg-primary-800 focus-visible:ring-2 focus-visible:ring-ring/50"
+					className="absolute bottom-3 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-primary-700/80 bg-gray-900 text-primary-200 shadow-sm outline-none transition-[color,background-color,box-shadow] hover:bg-primary-800 focus-visible:ring-2 focus-visible:ring-ring/50"
 					onClick={handleJumpToLatest}
 				>
 					<ArrowDown className="h-4 w-4" aria-hidden="true" />

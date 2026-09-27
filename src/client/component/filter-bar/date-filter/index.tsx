@@ -40,38 +40,38 @@ export function DateFilter({
 						<div className={`relative`}>
 							<Popover.Trigger
 								disabled={isLive}
-								className={`relative bg-zinc-950 flex h-9 w-52 items-center gap-2 rounded-l-md border border-zinc-700 px-3 text-sm outline-none transition-[color,box-shadow] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:z-20 data-[state=open]:ring-2 data-[state=open]:ring-ring/50 ${
+								className={`relative bg-gray-950 flex h-9 w-52 items-center gap-2 rounded-l-md border border-gray-700 px-3 text-sm outline-none transition-[color,box-shadow] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:z-20 data-[state=open]:ring-2 data-[state=open]:ring-ring/50 ${
 									isLive ? "cursor-not-allowed" : ""
 								}`}
 							>
 								<Clock
 									className={`h-3.5 w-3.5 shrink-0 transition-colors ${
 										isLive
-											? "text-zinc-500"
+											? "text-gray-500"
 											: isActive
 												? "text-primary-400"
-												: "text-zinc-500"
+												: "text-gray-500"
 									}`}
 								/>
 								<span
 									className={`min-w-0 flex-1 truncate text-left ${
 										isLive
-											? "text-zinc-500"
+											? "text-gray-500"
 											: isActive
 												? "text-primary-100"
-												: "text-zinc-400"
+												: "text-gray-400"
 									}`}
 								>
 									{isLive ? "Live" : filter.triggerDescription}
 								</span>
-								<ChevronDown className={`h-3.5 w-3.5 shrink-0 text-zinc-500`} />
+								<ChevronDown className={`h-3.5 w-3.5 shrink-0 text-gray-500`} />
 							</Popover.Trigger>
 						</div>
 					</Tooltip.Trigger>
 
 					<Portal>
 						<Tooltip.Positioner>
-							<Tooltip.Content className="rounded border border-zinc-700 bg-zinc-800 px-2 py-1 text-xs text-zinc-200 shadow-lg">
+							<Tooltip.Content className="rounded border border-gray-700 bg-gray-800 px-2 py-1 text-xs text-gray-200 shadow-lg">
 								{filter.triggerDescription}
 							</Tooltip.Content>
 						</Tooltip.Positioner>
@@ -86,7 +86,7 @@ export function DateFilter({
 						className={`relative flex h-9 items-center gap-2.5 rounded-r-md px-3.5 text-xs font-semibold tracking-wide outline-none transition-[color,background-color,box-shadow] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring/50 ${
 							isLive
 								? "border border-l-0 border-primary-600 bg-primary-600 text-white shadow-sm shadow-primary-600/20 hover:bg-primary-500"
-								: "border border-l-0 border-zinc-700 bg-zinc-800 text-zinc-400"
+								: "border border-l-0 border-gray-700 bg-gray-800 text-gray-400"
 						}`}
 					>
 						<Swap.Root
@@ -116,7 +116,7 @@ export function DateFilter({
 
 			<Portal>
 				<Popover.Positioner style={{ zIndex: 100 }}>
-					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 outline-none">
+					<Popover.Content className="mt-1.5 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-gray-700 bg-gray-900 shadow-xl shadow-black/60 outline-none">
 						<div className="relative flex">
 							<PresetPanel
 								searchInput={filter.searchInput}

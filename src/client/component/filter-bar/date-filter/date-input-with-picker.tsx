@@ -15,7 +15,7 @@ import {
 } from "./time-column";
 
 const SEGMENT_CLASS =
-	"rounded px-px text-zinc-100 outline-none data-placeholder-shown:text-zinc-400 data-[type=literal]:min-w-0 data-[type=literal]:select-none data-[type=literal]:px-0 data-[type=literal]:text-zinc-400 focus-visible:bg-primary-800 focus-visible:text-zinc-50";
+	"rounded px-px text-gray-100 outline-none data-placeholder-shown:text-gray-400 data-[type=literal]:min-w-0 data-[type=literal]:select-none data-[type=literal]:px-0 data-[type=literal]:text-gray-400 focus-visible:bg-primary-800 focus-visible:text-gray-50";
 
 function focusTimeColumn(ref: RefObject<HTMLDivElement | null>) {
 	ref.current?.querySelector<HTMLElement>('[role="listbox"]')?.focus();
@@ -96,7 +96,7 @@ export function DateInputWithPicker({
 					hourCycle={24}
 					className="min-w-0 flex-1"
 				>
-					<DateInput.SegmentGroup className="flex h-8 w-full items-center rounded border border-zinc-700 bg-zinc-950 px-2.5 text-sm transition-[box-shadow] focus-within:ring-2 focus-within:ring-ring/50">
+					<DateInput.SegmentGroup className="flex h-8 w-full items-center rounded border border-gray-700 bg-gray-950 px-2.5 text-sm transition-[box-shadow] focus-within:ring-2 focus-within:ring-ring/50">
 						<DateInput.Context>
 							{(api) => {
 								const segmentCounts = new Map<string, number>();
@@ -123,7 +123,7 @@ export function DateInputWithPicker({
 				<DatePicker.Trigger
 					ref={calendarTriggerRef}
 					type="button"
-					className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-zinc-700 bg-zinc-950 text-zinc-400 outline-none transition-[color,background-color,box-shadow] hover:bg-zinc-800 hover:text-zinc-200 focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:ring-2 data-[state=open]:ring-ring/50"
+					className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-gray-700 bg-gray-950 text-gray-400 outline-none transition-[color,background-color,box-shadow] hover:bg-gray-800 hover:text-gray-200 focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:ring-2 data-[state=open]:ring-ring/50"
 				>
 					<CalendarDays className="h-4 w-4" />
 				</DatePicker.Trigger>
@@ -132,11 +132,11 @@ export function DateInputWithPicker({
 			<Portal>
 				<DatePicker.Positioner>
 					{/* relative z-200: Zag.js reads getComputedStyle(content).zIndex to set --z-index on the positioner */}
-					<DatePicker.Content className="relative z-200 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-900 shadow-xl shadow-black/60 outline-none">
+					<DatePicker.Content className="relative z-200 max-w-[calc(100vw-1.5rem)] overflow-x-auto rounded-lg border border-gray-700 bg-gray-900 shadow-xl shadow-black/60 outline-none">
 						<div className="flex w-max">
 							<DatePicker.View
 								view="day"
-								className="p-3 [&:has(:focus-visible)]:bg-zinc-800/40"
+								className="p-3 [&:has(:focus-visible)]:bg-gray-800/40"
 								onKeyUpCapture={(event) => {
 									if (
 										event.key === "Enter" &&
@@ -153,19 +153,19 @@ export function DateInputWithPicker({
 											<DatePicker.ViewControl className="flex items-center justify-between gap-2">
 												<DatePicker.PrevTrigger
 													type="button"
-													className="inline-flex h-7 w-7 items-center justify-center rounded border border-zinc-700 text-zinc-300 outline-none transition-[background-color,box-shadow] hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-ring/50"
+													className="inline-flex h-7 w-7 items-center justify-center rounded border border-gray-700 text-gray-300 outline-none transition-[background-color,box-shadow] hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-ring/50"
 												>
 													<ChevronLeft className="h-4 w-4" aria-hidden="true" />
 												</DatePicker.PrevTrigger>
 												<DatePicker.ViewTrigger
 													type="button"
-													className="rounded px-2 py-1 text-sm text-zinc-100 outline-none transition-[background-color,box-shadow] hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-ring/50"
+													className="rounded px-2 py-1 text-sm text-gray-100 outline-none transition-[background-color,box-shadow] hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-ring/50"
 												>
 													<DatePicker.RangeText />
 												</DatePicker.ViewTrigger>
 												<DatePicker.NextTrigger
 													type="button"
-													className="inline-flex h-7 w-7 items-center justify-center rounded border border-zinc-700 text-zinc-300 outline-none transition-[background-color,box-shadow] hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-ring/50"
+													className="inline-flex h-7 w-7 items-center justify-center rounded border border-gray-700 text-gray-300 outline-none transition-[background-color,box-shadow] hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-ring/50"
 												>
 													<ChevronRight
 														className="h-4 w-4"
@@ -180,7 +180,7 @@ export function DateInputWithPicker({
 														{picker.weekDays.map((weekDay) => (
 															<DatePicker.TableHeader
 																key={weekDay.short}
-																className="pb-1 text-center text-xs font-normal text-zinc-400"
+																className="pb-1 text-center text-xs font-normal text-gray-400"
 															>
 																{weekDay.short}
 															</DatePicker.TableHeader>
@@ -198,7 +198,7 @@ export function DateInputWithPicker({
 																	value={day}
 																	className="p-0.5"
 																>
-																	<DatePicker.TableCellTrigger className="flex h-8 w-8 items-center justify-center rounded text-sm text-zinc-200 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 data-in-range:bg-primary-950/60 data-outside-range:text-zinc-600 data-selected:bg-primary-700 data-selected:text-zinc-50 data-today:ring-1 data-today:ring-primary-600 [&:hover:not([data-in-range]):not([data-selected])]:bg-zinc-800">
+																	<DatePicker.TableCellTrigger className="flex h-8 w-8 items-center justify-center rounded text-sm text-gray-200 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50 data-in-range:bg-primary-950/60 data-outside-range:text-gray-600 data-selected:bg-primary-700 data-selected:text-gray-50 data-today:ring-1 data-today:ring-primary-600 [&:hover:not([data-in-range]):not([data-selected])]:bg-gray-800">
 																		{day.day}
 																	</DatePicker.TableCellTrigger>
 																</DatePicker.TableCell>
@@ -211,7 +211,7 @@ export function DateInputWithPicker({
 									)}
 								</DatePicker.Context>
 							</DatePicker.View>
-							<div className="flex h-72 border-l border-zinc-700">
+							<div className="flex h-72 border-l border-gray-700">
 								<TimeColumn
 									label="Hour"
 									collection={HOUR_COLLECTION}
@@ -231,7 +231,7 @@ export function DateInputWithPicker({
 										handleTimeChange("minute", nextMinute)
 									}
 									onAdvance={() => focusTimeColumn(secondRef)}
-									className="border-l border-zinc-700"
+									className="border-l border-gray-700"
 								/>
 								<TimeColumn
 									label="Second"
@@ -246,7 +246,7 @@ export function DateInputWithPicker({
 										restoreCalendarTriggerFocusRef.current = true;
 										datePicker.setOpen(false);
 									}}
-									className="border-l border-zinc-700"
+									className="border-l border-gray-700"
 								/>
 							</div>
 						</div>

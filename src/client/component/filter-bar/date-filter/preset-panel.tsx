@@ -97,7 +97,7 @@ export function PresetPanel({
 			selectionMode="single"
 			value={[]}
 			onSelect={(details) => handleSelect(details.value)}
-			className="absolute inset-y-0 left-0 flex w-44 flex-col overflow-hidden border-r border-zinc-700/80"
+			className="absolute inset-y-0 left-0 flex w-44 flex-col overflow-hidden border-r border-gray-700/80"
 		>
 			<div className="shrink-0 px-2 pb-1.5 pt-2.5">
 				<Listbox.Input
@@ -106,7 +106,7 @@ export function PresetPanel({
 					value={searchInput}
 					onChange={(e) => onSearchChange(e.target.value)}
 					placeholder="e.g. 30s, 2h, 7d"
-					className="h-7 w-full rounded border border-zinc-700 bg-zinc-950 px-2 text-xs text-zinc-100 outline-none placeholder:text-zinc-600 transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50"
+					className="h-7 w-full rounded border border-gray-700 bg-gray-950 px-2 text-xs text-gray-100 outline-none placeholder:text-gray-600 transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50"
 				/>
 			</div>
 
@@ -116,20 +116,20 @@ export function PresetPanel({
 						<Listbox.Item
 							item={getPresetOption("dynamic")}
 							highlightOnHover
-							className="flex w-full cursor-pointer items-center gap-1.5 rounded px-2 py-1.5 text-left text-sm text-zinc-300 hover:bg-zinc-800 data-highlighted:bg-zinc-800"
+							className="flex w-full cursor-pointer items-center gap-1.5 rounded px-2 py-1.5 text-left text-sm text-gray-300 hover:bg-gray-800 data-highlighted:bg-gray-800"
 						>
 							<Clock className="h-3.5 w-3.5 shrink-0" />
 							{dynamicPreset.label}
 						</Listbox.Item>
 						{filteredPresetGroups.length > 0 && (
-							<div className="my-1 border-t border-zinc-700/60" />
+							<div className="my-1 border-t border-gray-700/60" />
 						)}
 					</>
 				)}
 
 				{filteredPresetGroups.map((group, i) => (
 					<div key={group.group} className={i === 0 ? "" : "mt-3"}>
-						<p className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+						<p className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-gray-600">
 							{group.group}
 						</p>
 						{group.presets.map((preset) => (
@@ -137,7 +137,7 @@ export function PresetPanel({
 								key={preset.label}
 								item={getPresetOption(`${group.group}:${preset.label}`)}
 								highlightOnHover
-								className="w-full cursor-pointer rounded px-2 py-1.5 text-left text-sm text-zinc-300 hover:bg-zinc-800 data-highlighted:bg-zinc-800"
+								className="w-full cursor-pointer rounded px-2 py-1.5 text-left text-sm text-gray-300 hover:bg-gray-800 data-highlighted:bg-gray-800"
 							>
 								{preset.label}
 							</Listbox.Item>
@@ -146,7 +146,7 @@ export function PresetPanel({
 				))}
 
 				{!dynamicPreset && filteredPresetGroups.length === 0 && (
-					<p className="px-2 py-3 text-xs text-zinc-500">No matches</p>
+					<p className="px-2 py-3 text-xs text-gray-500">No matches</p>
 				)}
 			</Listbox.Content>
 		</Listbox.Root>

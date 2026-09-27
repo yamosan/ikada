@@ -21,7 +21,7 @@ function App() {
 	});
 
 	return (
-		<div className="flex h-full flex-col bg-zinc-900 text-zinc-200">
+		<div className="flex h-full flex-col bg-gray-900 text-gray-200">
 			<FilterBar />
 			<LogExplorer />
 		</div>

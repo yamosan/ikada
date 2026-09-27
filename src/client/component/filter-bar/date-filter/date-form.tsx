@@ -46,7 +46,7 @@ export function DateForm({
 			<div className="flex flex-1 flex-col gap-5 p-4">
 				{/* Condition */}
 				<div className="space-y-1.5">
-					<p className="text-xs font-medium text-zinc-400">Condition</p>
+					<p className="text-xs font-medium text-gray-400">Condition</p>
 					<Select.Root
 						collection={OPERATOR_COLLECTION}
 						value={[draft.date.operator]}
@@ -56,20 +56,20 @@ export function DateForm({
 						}}
 					>
 						<Select.Control>
-							<Select.Trigger className="flex h-8 w-full items-center justify-between rounded border border-zinc-700 bg-zinc-950 px-3 text-sm text-zinc-100 outline-none transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:ring-2 data-[state=open]:ring-ring/50">
+							<Select.Trigger className="flex h-8 w-full items-center justify-between rounded border border-gray-700 bg-gray-950 px-3 text-sm text-gray-100 outline-none transition-[color,box-shadow] focus-visible:ring-2 focus-visible:ring-ring/50 data-[state=open]:ring-2 data-[state=open]:ring-ring/50">
 								<Select.ValueText placeholder="Select condition" />
 								<Select.Indicator>
-									<ChevronDown className="h-4 w-4 text-zinc-400" />
+									<ChevronDown className="h-4 w-4 text-gray-400" />
 								</Select.Indicator>
 							</Select.Trigger>
 						</Select.Control>
 						<Select.Positioner style={{ zIndex: 110 }}>
-							<Select.Content className="mt-1 min-w-(--reference-width) overflow-hidden rounded border border-zinc-700 bg-zinc-900 p-1 shadow-lg shadow-black/40 outline-none">
+							<Select.Content className="mt-1 min-w-(--reference-width) overflow-hidden rounded border border-gray-700 bg-gray-900 p-1 shadow-lg shadow-black/40 outline-none">
 								{OPERATOR_OPTIONS.map((item) => (
 									<Select.Item
 										key={item.value}
 										item={item}
-										className="flex cursor-pointer items-center justify-between rounded px-2 py-1.5 text-sm text-zinc-200 data-highlighted:bg-zinc-800"
+										className="flex cursor-pointer items-center justify-between rounded px-2 py-1.5 text-sm text-gray-200 data-highlighted:bg-gray-800"
 									>
 										<Select.ItemText>{item.label}</Select.ItemText>
 										<Select.ItemIndicator>
@@ -88,14 +88,14 @@ export function DateForm({
 					{draft.date.operator === "between" ? (
 						<>
 							<div className="space-y-1.5">
-								<p className="text-xs font-medium text-zinc-400">From</p>
+								<p className="text-xs font-medium text-gray-400">From</p>
 								<DateInputWithPicker
 									value={toDateValue(draft.date.between.start)}
 									onChange={(v) => onDateChange("start", v)}
 								/>
 							</div>
 							<div className="space-y-1.5">
-								<p className="text-xs font-medium text-zinc-400">To</p>
+								<p className="text-xs font-medium text-gray-400">To</p>
 								<DateInputWithPicker
 									value={toDateValue(draft.date.between.end)}
 									onChange={(v) => onDateChange("end", v)}
@@ -113,7 +113,7 @@ export function DateForm({
 						/>
 					)}
 					{hasInvalidRange && (
-						<p className="text-xs text-rose-400">
+						<p className="text-xs text-red-400">
 							"To" must be later than "From".
 						</p>
 					)}
@@ -121,12 +121,12 @@ export function DateForm({
 			</div>
 
 			{/* Footer */}
-			<div className="flex items-center justify-end gap-2 border-t border-zinc-700/80 px-4 py-2.5">
+			<div className="flex items-center justify-end gap-2 border-t border-gray-700/80 px-4 py-2.5">
 				<button
 					type="button"
 					onClick={onClear}
 					disabled={!canClear}
-					className="h-7 rounded border border-zinc-700 bg-transparent px-4 text-xs text-zinc-400 outline-none transition-[color,border-color,box-shadow] hover:border-zinc-500 hover:text-zinc-200 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-30"
+					className="h-7 rounded border border-gray-700 bg-transparent px-4 text-xs text-gray-400 outline-none transition-[color,border-color,box-shadow] hover:border-gray-500 hover:text-gray-200 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-30"
 				>
 					Clear
 				</button>
@@ -134,7 +134,7 @@ export function DateForm({
 					type="button"
 					onClick={onApply}
 					disabled={applyDisabled}
-					className="h-7 rounded border border-primary-700/90 bg-primary-900/60 px-4 text-xs text-primary-100 outline-none transition-[color,background-color,border-color,box-shadow] hover:bg-primary-800/80 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-400"
+					className="h-7 rounded border border-primary-700/90 bg-primary-900/60 px-4 text-xs text-primary-100 outline-none transition-[color,background-color,border-color,box-shadow] hover:bg-primary-800/80 focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:border-gray-700 disabled:bg-gray-800 disabled:text-gray-400"
 				>
 					Apply
 				</button>
