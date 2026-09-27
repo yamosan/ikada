@@ -123,7 +123,7 @@ export function TimeColumn({
 					<Listbox.Item
 						key={item.value}
 						item={item}
-						className="flex h-8 snap-center cursor-pointer items-center justify-center rounded text-sm text-zinc-300 outline-none data-highlighted:bg-teal-700 data-highlighted:text-zinc-50 data-selected:bg-teal-700 data-selected:text-zinc-50 [&:hover:not([data-highlighted]):not([data-selected])]:bg-zinc-800"
+						className="flex h-8 snap-center cursor-pointer items-center justify-center rounded text-sm text-zinc-300 outline-none data-highlighted:bg-amber-700 data-highlighted:text-zinc-50 data-selected:bg-amber-700 data-selected:text-zinc-50 [&:hover:not([data-highlighted]):not([data-selected])]:bg-zinc-800"
 					>
 						<Listbox.ItemText>{item.label}</Listbox.ItemText>
 					</Listbox.Item>
