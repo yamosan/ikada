@@ -99,7 +99,13 @@ The response contains the assigned sequence number:
 ### Stream log events
 
 ```http
-GET /api/events?sinceSeq=<number>
+POST /api/events
+```
+
+```json
+{
+  "sinceSeq": 1
+}
 ```
 
 The SSE stream emits `snapshot` and `append` events containing `LogEvent[]` payloads.

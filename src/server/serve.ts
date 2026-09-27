@@ -82,40 +82,60 @@ export function serve(options: ServeOptions = {}) {
 		),
 		(c) => {
 			const payload = c.req.valid("json");
-			const snapshot = logStore.snapshot(payload.sinceSeq);
 			return streamSSE(c, async (stream) => {
 				let unsubscribe = (): void => {};
 				let finished = false;
+				let initialized = false;
+				let writeQueue = Promise.resolve();
+				const pendingEvents: LogEvent[] = [];
 
 				const cleanup = (): void => {
 					if (finished) return;
 					finished = true;
 					unsubscribe();
 				};
+				const enqueueEvent = (event: LogEvent): void => {
+					writeQueue = writeQueue
+						.then(() => {
+							if (finished) return;
+							return stream.writeSSE({
+								event: "append",
+								data: JSON.stringify(event),
+								id: String(event.seq),
+							});
+						})
+						.catch(cleanup);
+				};
 
-				await stream.writeSSE({
-					event: "snapshot",
-					data: JSON.stringify(snapshot),
-					id:
-						snapshot.length > 0
-							? String(snapshot[snapshot.length - 1]?.seq)
-							: undefined,
-				});
-
-				unsubscribe = logStore.subscribe((event: LogEvent) => {
-					if (finished) {
+				unsubscribe = logStore.subscribe((event) => {
+					if (finished) return;
+					if (!initialized) {
+						pendingEvents.push(event);
 						return;
 					}
-					void stream
-						.writeSSE({
-							event: "append",
-							data: JSON.stringify(event),
-							id: String(event.seq),
-						})
-						.catch(() => {
-							cleanup();
-						});
+					enqueueEvent(event);
 				});
+
+				const snapshot = logStore.snapshot(payload.sinceSeq);
+
+				try {
+					await stream.writeSSE({
+						event: "snapshot",
+						data: JSON.stringify(snapshot),
+						id:
+							snapshot.length > 0
+								? String(snapshot[snapshot.length - 1]?.seq)
+								: undefined,
+					});
+				} catch {
+					cleanup();
+					return;
+				}
+
+				initialized = true;
+				for (const event of pendingEvents) {
+					enqueueEvent(event);
+				}
 
 				await whenAborted(stream, c.req.raw.signal, cleanup);
 			});
